@@ -1,0 +1,118 @@
+@import '../../variables';
+
+.menu {
+  font-family: $font_main;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0.1px;
+  max-width: 255px;
+
+  li:hover {
+    cursor: pointer;
+    color: $link_hover;
+  }
+
+  li:active {
+    color: $link_active;
+  }
+
+  li {
+    padding-bottom: 42px;
+  }
+
+  &_firstLink {
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    padding-bottom: 8px !important;
+    margin-bottom: 16px;
+    border-bottom: 1px solid $link_hover;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.secondMenu {
+  visibility: hidden;
+  max-height: 0px;
+  opacity: 0;
+  transition: max-height 1.5s ease, visibility 0.5s linear, opacity 0.5s linear;
+  &_link {
+    font-family: $font_main;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    color: $main_dark;
+    padding: 0 0 16px 20px !important;
+  }
+
+  &_countBooksLabel {
+    color: $gray_light;
+    font-family: $font_main;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+  }
+}
+
+.active {
+  font-family: $font_main;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0.1px;
+  color: $main_orange;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.showMenu {
+  visibility: visible;
+  max-height: 672px;
+  opacity: 1;
+  transition: max-height 1.5s ease, opacity 1s ease;
+}
+
+.mobileMenu {
+  position: fixed;
+  left: 100%;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  z-index: 10;
+  transition: left 1s;
+}
+
+.active {
+  left: 0;
+}
+
+.bookShowcase {
+  display: inline-block;
+  width: 100%;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.arrowsActive {
+  fill: $main_orange;
+}
+
+.arrowsUsual {
+  fill: $main_dark;
+}

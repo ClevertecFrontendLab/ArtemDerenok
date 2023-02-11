@@ -1,0 +1,66 @@
+@import '../../variables';
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1110px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-top: 1px solid $gray_s_light;
+
+  p {
+    font-family: $font_main;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    color: black;
+  }
+
+  .linksContainer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0;
+    width: 168px;
+
+    a {
+      width: 24px;
+      height: 24px;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .faceBookLink {
+      background-image: url('../../assets/facebook.png');
+    }
+
+    .instLink {
+      background-image: url('../../assets/instagram.png');
+    }
+
+    .vkLink {
+      background-image: url('../../assets/vk.png');
+    }
+
+    .linLink {
+      background-image: url('../../assets/linkedin.png');
+    }
+  }
+}
+
+@media (min-width: $breakpoint-tablet-min) and (max-width: $breakpoint-tablet-max) {
+  .footer {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: $breakpoint-mobile-min) and (max-width: $breakpoint-mobile-max) {
+  .footer {
+    flex-direction: column;
+    p {
+      text-align: center;
+    }
+  }
+}

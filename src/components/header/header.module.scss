@@ -1,0 +1,141 @@
+@import '../../variables';
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1110px;
+  max-height: 58px;
+  margin-top: 42px;
+  margin-bottom: 62px;
+  position: relative;
+
+  .logoContainer {
+    display: flex;
+    gap: 120px;
+
+    .menuIcon {
+      display: none;
+    }
+
+    .link {
+      background-image: url('../../assets/logo.png');
+      background-size: contain;
+      display: inline-block;
+      font-size: 0;
+      width: 165px;
+      height: 40px;
+    }
+
+    h1 {
+      font-family: $font_main;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 40px;
+      letter-spacing: 0.1px;
+      color: $main_dark;
+    }
+  }
+
+  .avatarContainer {
+    display: flex;
+    align-items: center;
+
+    p {
+      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+      font-family: $font_main;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 18px;
+      text-align: right;
+      letter-spacing: 0.1px;
+      margin-right: 16px;
+    }
+
+    img {
+      filter: drop-shadow(0px 2px 4px rgba(191, 196, 201, 0.2)) drop-shadow(0px 3px 4px rgba(191, 196, 201, 0.18))
+        drop-shadow(0px 1px 5px rgba(191, 196, 201, 0.24));
+      border-radius: 150px;
+      width: 58px;
+      height: 58px;
+    }
+  }
+}
+
+.mobileBtn {
+  display: none;
+}
+
+.mobileMenu {
+  display: none;
+}
+
+@media (min-width: $breakpoint-mobile-min) and (max-width: $breakpoint-tablet-max) {
+  .header {
+    max-width: 100%;
+    min-width: none;
+    .logoContainer {
+      gap: 24px;
+      .link {
+        display: none;
+      }
+      .menuIcon {
+        display: block;
+      }
+    }
+    .avatarContainer {
+      display: none;
+    }
+  }
+
+  .mobileBtn {
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  .mobileMenu {
+    display: block;
+    position: absolute;
+    top: 100px;
+    left: -100%;
+    bottom: 0;
+    height: fit-content;
+    z-index: 10;
+    transition: left 1s;
+    background: #f9f9fa;
+    box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
+      0px 1px 5px rgba(191, 196, 201, 0.24);
+    border-radius: 10px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 32px;
+    width: 88%;
+  }
+}
+
+@media (min-width: $breakpoint-mobile-min) and (max-width: 430px) {
+  .mobileMenu {
+    width: 100%;
+  }
+}
+
+.active {
+  left: 0;
+}
+
+.wrapper {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.hide {
+  display: none;
+}
