@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
 import genres from '../../data/genres.json';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { getCategoriesThunk } from '../../redux/slices/categories-slice';
 
 import styles from './menu.module.scss';
 
@@ -15,6 +17,8 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
   const ganresList = useRef<HTMLUListElement>(null);
   const downArrow = useRef<SVGSVGElement>(null);
   const upArrow = useRef<SVGSVGElement>(null);
+
+  const dispatch = useAppDispatch();
 
   const handleMenu = () => {
     if (ganresList.current) {
@@ -29,6 +33,10 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
       }
     }
   };
+
+  useEffect(() => {
+    dispatch(getCategoriesThunk());
+  }, [dispatch]);
 
   return (
     <ul className={styles.menu}>
