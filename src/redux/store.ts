@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { booksReducer } from './slices/book-slice';
+import { bookReducer } from './slices/book-slice';
+import { booksReducer } from './slices/books-slice';
 import { categoriesReducer } from './slices/categories-slice';
 
 
@@ -8,6 +9,7 @@ export const store = configureStore({
     reducer: {
         booksReducer,
         categoriesReducer,
+        bookReducer
     },
     devTools: process.env.NODE_ENV !== 'production',
 })

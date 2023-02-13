@@ -8,3 +8,10 @@ export const getAllBooks = async () => {
 
     return data;
 }
+
+export const getBookById = async (id: number) => {
+    const response = await axiosInstance.get(`${path}/${id}`)
+    const data = await response.data;
+
+    return data;
+}

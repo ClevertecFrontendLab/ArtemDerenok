@@ -6,7 +6,7 @@ import { FiltrationBar } from '../../components/filtration/filtration-bar';
 import { Menu } from '../../components/menu/menu';
 import books from '../../data/books.json';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { getBooksThunk } from '../../redux/slices/book-slice';
+import { getBooksThunk } from '../../redux/slices/books-slice';
 
 import styles from './main-page.module.scss';
 

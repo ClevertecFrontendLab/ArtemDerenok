@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import downImg from '../../assets/down.png';
@@ -11,6 +11,8 @@ import { Review } from '../../components/review/review';
 import { Slider } from '../../components/slider/slider';
 import { SliderTablet } from '../../components/slider/slider-tablet';
 import books from '../../data/books.json';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { getBookThunk } from '../../redux/slices/book-slice';
 
 import styles from './book-page.module.scss';
 
@@ -21,6 +23,12 @@ export const BookPage = () => {
   const upArrow = useRef<HTMLImageElement>(null);
 
   const data = books.find((elem) => elem.id === Number(bookId));
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getBookThunk(3));
+  }, [dispatch]);
 
   const handleVisibilityReviews = () => {
     if (reviewsRef.current?.classList.contains(styles.hideReview)) {
