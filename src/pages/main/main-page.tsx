@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
 
 import { Card } from '../../components/card/card';
 import { FiltrationBar } from '../../components/filtration/filtration-bar';
 import { Menu } from '../../components/menu/menu';
 import books from '../../data/books.json';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { getBooksThunk } from '../../redux/slices/book-slice';
 
 import styles from './main-page.module.scss';
 
 export const MainPage = () => {
   const [isPlate, setIsPlate] = useState(true);
   const [isList, setIsList] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   const changeIsPlate = () => {
     setIsPlate(true);
@@ -21,6 +25,10 @@ export const MainPage = () => {
     setIsList(true);
     setIsPlate(false);
   };
+
+  useEffect(() => {
+    dispatch(getBooksThunk());
+  }, [dispatch]);
 
   return (
     <React.Fragment>

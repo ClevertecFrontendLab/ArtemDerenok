@@ -2,5 +2,5 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
     baseURL: 'https://strapi.cleverland.by',
-    timeout: 5000,
+    timeout: 20000,
 })

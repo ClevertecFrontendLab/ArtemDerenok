@@ -1,19 +1,81 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit'
+/* eslint-disable no-param-reassign */
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { getAllBooks } from '../../api/books';
+
+interface IBook {
+    issueYear: string,
+    rating: number,
+    title: string,
+    authors: string[],
+    image: {
+        url: string
+    },
+    categories: string[],
+    id: number,
+    booking: null | {
+        id: number,
+        order: boolean,
+        dataOrder: string,
+        customerId: number,
+        customerFirstName: string,
+        customerLastName: string,
+    },
+    delivery: null | {
+        id: number,
+        handed: true,
+        dataHandedFrom: string,
+        dataHandedTo: string,
+        recipientId: number,
+        recipientFirstName: string,
+        recipientLastName: string,
+    },
+    histories: null | {
+        id: number,
+        userId: number
+    }
+}
 
 interface IInitialState {
-    books: string[],
+    books: IBook[],
+    loading: boolean,
+    error: boolean,
 }
 
 const initialState: IInitialState = {
-    books: ['1', '2'],
+    books: [],
+    loading: false,
+    error: false,
 }
+
+export const getBooksThunk = createAsyncThunk(
+    'books/getBooks',
+    () => getAllBooks()
+)
 
 
 const booksSlice = createSlice({
     name: 'books',
     initialState,
-    reducers: {}
+    reducers: {
+        setBooks: (state, actions: PayloadAction<IBook[]>) => {
+            state.books = actions.payload;
+        }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(getBooksThunk.pending, (state) => {
+            state.loading = true;
+            state.error = false;
+        });
+        builder.addCase(getBooksThunk.fulfilled, (state, action: PayloadAction<IBook[]>) => {
+            state.loading = false;
+            state.books = action.payload;
+        });
+        builder.addCase(getBooksThunk.rejected, (state) => {
+            state.loading = false;
+            state.error = true;
+        })
+    }
 })
 
 const { actions, reducer } = booksSlice;

@@ -128,9 +128,7 @@ export const Terms = ({ content }: ITerms) => {
       </React.Fragment>
     ) : content === 'rules' ? (
       <React.Fragment>
-        <nav className={styles.menuContainer}>
-          <Menu isBurger={false} />
-        </nav>
+        <nav className={styles.menuContainer}>{/* <Menu isBurger={false} /> */}</nav>
         <section className={styles.terms}>
           <h2>Правила пользования</h2>
           <ol>

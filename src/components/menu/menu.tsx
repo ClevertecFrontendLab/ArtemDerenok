@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 
 import genres from '../../data/genres.json';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useTypeSelector } from '../../hooks/use-type-selector';
 import { getCategoriesThunk } from '../../redux/slices/categories-slice';
 
 import styles from './menu.module.scss';
@@ -17,7 +18,7 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
   const ganresList = useRef<HTMLUListElement>(null);
   const downArrow = useRef<SVGSVGElement>(null);
   const upArrow = useRef<SVGSVGElement>(null);
-
+  const { categories, loading, error } = useTypeSelector((state) => state.categoriesReducer);
   const dispatch = useAppDispatch();
 
   const handleMenu = () => {
@@ -35,11 +36,14 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
   };
 
   useEffect(() => {
-    dispatch(getCategoriesThunk());
-  }, [dispatch]);
+    if (categories.length === 0) {
+      dispatch(getCategoriesThunk());
+    }
+  }, [categories.length, dispatch]);
 
   return (
     <ul className={styles.menu}>
+      {loading ? <li>Загрузка</li> : null}
       <li className={styles.menu_firstLink}>
         <NavLink
           data-test-id={isBurger === false ? 'navigation-showcase' : 'burger-showcase'}
@@ -83,31 +87,24 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
         </NavLink>
       </li>
       <ul ref={ganresList} className={styles.secondMenu}>
-        {genres.map((elem, index) => {
-          if (index === 0) {
-            return (
-              <li key={nanoid()} className={styles.secondMenu_link}>
-                <NavLink
-                  data-test-id={isBurger === false ? 'navigation-books' : 'burger-books'}
-                  onClick={showMobileMenu}
-                  to={`/books/${elem.name}`}
-                >
-                  {({ isActive }) => <span className={isActive ? styles.active : undefined}>{elem.name}</span>}
-                </NavLink>{' '}
-                <span className={styles.secondMenu_countBooksLabel}>{elem.count}</span>
-              </li>
-            );
-          }
-
-          return (
-            <li key={nanoid()} className={styles.secondMenu_link}>
-              <NavLink onClick={showMobileMenu} to={`/books/${elem.name}`}>
-                {({ isActive }) => <span className={isActive ? styles.active : undefined}>{elem.name}</span>}
-              </NavLink>{' '}
-              <span className={styles.secondMenu_countBooksLabel}>{elem.count}</span>
-            </li>
-          );
-        })}
+        <li key={nanoid()} className={styles.secondMenu_link}>
+          <NavLink
+            data-test-id={isBurger === false ? 'navigation-books' : 'burger-books'}
+            onClick={showMobileMenu}
+            to='/books/all-books'
+          >
+            {({ isActive }) => <span className={isActive ? styles.active : undefined}>Все книги</span>}
+          </NavLink>{' '}
+          <span className={styles.secondMenu_countBooksLabel}>10</span>
+        </li>
+        {categories.map((elem) => (
+          <li key={nanoid()} className={styles.secondMenu_link}>
+            <NavLink onClick={showMobileMenu} to={`/books/${elem.path}`}>
+              {({ isActive }) => <span className={isActive ? styles.active : undefined}>{elem.name}</span>}
+            </NavLink>{' '}
+            <span className={styles.secondMenu_countBooksLabel}>10</span>
+          </li>
+        ))}
       </ul>
       <li>
         <NavLink

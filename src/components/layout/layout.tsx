@@ -13,7 +13,7 @@ export const Layout = () => (
     <Header />
     <div className={styles.container_content}>
       <Routes>
-        <Route path='/' element={<Navigate to='/books/Все книги' />} />
+        <Route path='/' element={<Navigate to='/books/all-books' />} />
         <Route path='/books' element={<MainPage />} />
         <Route path='/books/:categories' element={<MainPage />} />
         <Route path='/books/:categories/book/:bookId' element={<BookPage />} />

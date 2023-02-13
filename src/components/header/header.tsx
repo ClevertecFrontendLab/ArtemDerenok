@@ -29,7 +29,7 @@ export const Header = () => {
       />
       <header className={styles.header}>
         <div data-test-id='burger-navigation' className={`${styles.mobileMenu} ${isShowMenu ? styles.active : ''}`}>
-          <Menu showMobileMenu={showMobileMenu} isBurger={true} />
+          {isShowMenu ? <Menu showMobileMenu={showMobileMenu} isBurger={true} /> : null}
         </div>
         <div className={styles.logoContainer}>
           <Link className={styles.link} to='/'>

@@ -9,25 +9,16 @@ interface ICategorie {
     id: number,
 }
 
-interface IError {
-    data: null,
-    error: {
-        status: number,
-        name: string,
-        message: string,
-        details: object,
-    }
-}
 
 interface IInitialState {
     categories: ICategorie[],
-    error: null | IError,
+    error: boolean,
     loading: boolean,
 }
 
 const initialState: IInitialState = {
     categories: [],
-    error: null,
+    error: false,
     loading: false,
 }
 
@@ -46,8 +37,17 @@ export const categoriesSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
+        builder.addCase(getCategoriesThunk.pending, (state) => {
+            state.loading = true;
+            state.error = false;
+        });
         builder.addCase(getCategoriesThunk.fulfilled, (state, action: PayloadAction<ICategorie[]>) => {
+            state.loading = false;
             state.categories = action.payload;
+        });
+        builder.addCase(getCategoriesThunk.rejected, (state) => {
+            state.loading = false;
+            state.error = true;
         })
     }
 });
