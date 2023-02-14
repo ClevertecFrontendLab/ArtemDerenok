@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
-import genres from '../../data/genres.json';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useTypeSelector } from '../../hooks/use-type-selector';
 import { getCategoriesThunk } from '../../redux/slices/categories-slice';
@@ -18,7 +17,7 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
   const ganresList = useRef<HTMLUListElement>(null);
   const downArrow = useRef<SVGSVGElement>(null);
   const upArrow = useRef<SVGSVGElement>(null);
-  const { categories, loading, error } = useTypeSelector((state) => state.categoriesReducer);
+  const categories = useTypeSelector((state) => state.categoriesReducer.categories);
   const dispatch = useAppDispatch();
 
   const handleMenu = () => {
@@ -43,7 +42,6 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
 
   return (
     <ul className={styles.menu}>
-      {loading ? <li>Загрузка</li> : null}
       <li className={styles.menu_firstLink}>
         <NavLink
           data-test-id={isBurger === false ? 'navigation-showcase' : 'burger-showcase'}
