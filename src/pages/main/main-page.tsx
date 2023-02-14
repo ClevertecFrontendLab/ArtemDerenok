@@ -4,8 +4,9 @@ import { nanoid } from 'nanoid';
 import { Card } from '../../components/card/card';
 import { FiltrationBar } from '../../components/filtration/filtration-bar';
 import { Menu } from '../../components/menu/menu';
-import books from '../../data/books.json';
+import { Spinner } from '../../components/spinner/spinner';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { useTypeSelector } from '../../hooks/use-type-selector';
 import { getBooksThunk } from '../../redux/slices/books-slice';
 
 import styles from './main-page.module.scss';
@@ -15,6 +16,8 @@ export const MainPage = () => {
   const [isList, setIsList] = useState(false);
 
   const dispatch = useAppDispatch();
+
+  const { books, loading, error } = useTypeSelector((state) => state.booksReducer);
 
   const changeIsPlate = () => {
     setIsPlate(true);
@@ -38,19 +41,21 @@ export const MainPage = () => {
       <main className={styles.mainPage}>
         <FiltrationBar isPlate={isPlate} isList={isList} changeIsPlate={changeIsPlate} changeIsList={changeIsList} />
         <div className={styles.mainPage_plate}>
-          {books.map((elem) => (
-            <Card
-              key={nanoid()}
-              name={elem.name}
-              isImage={elem.isImage}
-              images={elem.images}
-              rating={elem.rating}
-              author={elem.author}
-              status={elem.status}
-              id={elem.id}
-              isList={isList}
-            />
-          ))}
+          {books.length > 0
+            ? books.map((elem) => (
+                <Card
+                  key={nanoid()}
+                  name={elem.title}
+                  images={elem.image === null ? null : elem.image.url}
+                  rating={elem.rating}
+                  author={elem.authors}
+                  booking={elem.booking}
+                  delivery={elem.delivery}
+                  id={elem.id}
+                  isList={isList}
+                />
+              ))
+            : null}
         </div>
       </main>
     </React.Fragment>

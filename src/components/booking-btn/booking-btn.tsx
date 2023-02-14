@@ -1,12 +1,34 @@
 import styles from './booking-btn.module.scss';
 
 interface IBookingBtn {
-  state: string | undefined;
-  date: null | string | undefined;
+  booking: null | {
+    id: number;
+    order: boolean;
+    dataOrder: string;
+    customerId: number;
+    customerFirstName: string;
+    customerLastName: string;
+  };
+  delivery: null | {
+    id: number;
+    handed: true;
+    dataHandedFrom: string;
+    dataHandedTo: string;
+    recipientId: number;
+    recipientFirstName: string;
+    recipientLastName: string;
+  };
 }
 
-export const BookingBtn = ({ state, date }: IBookingBtn) => (
-  <button className={state === 'book' ? styles.book : state === 'booked' ? styles.booked : styles.busy} type='button'>
-    {state === 'book' ? 'Забронировать' : state === 'booked' ? 'Забронированно' : `Занято до ${date}`}
+export const BookingBtn = ({ booking, delivery }: IBookingBtn) => (
+  <button
+    className={booking === null ? styles.book : booking.order === true ? styles.booked : styles.busy}
+    type='button'
+  >
+    {booking === null
+      ? 'Забронировать'
+      : booking.order === true
+      ? 'Забронированно'
+      : `Занято до ${delivery?.dataHandedTo}`}
   </button>
 );

@@ -25,6 +25,7 @@
     align-self: center;
     &_picture {
       height: 210px;
+      object-fit: contain;
     }
   }
 
@@ -57,6 +58,7 @@
     margin-left: 8px;
     margin-bottom: 28px;
     align-self: baseline;
+    white-space: pre-line;
   }
 }
 
@@ -90,6 +92,8 @@
       font-size: 22px;
       line-height: 32px;
       color: #363636;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .author {

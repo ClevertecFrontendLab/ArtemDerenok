@@ -10,25 +10,37 @@ import styles from './card.module.scss';
 
 interface ICard {
   name: string;
-  isImage: boolean;
   rating: number | null;
-  images: string[] | never[];
-  author: string;
-  status: {
-    state: string;
-    date: null | string;
+  images: string | null;
+  author: string[];
+  booking: null | {
+    id: number;
+    order: boolean;
+    dataOrder: string;
+    customerId: number;
+    customerFirstName: string;
+    customerLastName: string;
+  };
+  delivery: null | {
+    id: number;
+    handed: true;
+    dataHandedFrom: string;
+    dataHandedTo: string;
+    recipientId: number;
+    recipientFirstName: string;
+    recipientLastName: string;
   };
   id: number;
   isList: boolean;
 }
 
-export const Card = ({ name, isImage, images, rating, author, status: { state, date }, id, isList }: ICard) => (
+export const Card = ({ name, images, rating, author, booking, delivery, id, isList }: ICard) => (
   <div className={`${styles.card} ${isList ? styles.list : null}`} data-test-id='card'>
     <Link className={`${isList ? styles.linkList : styles.link}`} to={`book/${id}`}>
       <div className={`${isList ? styles.listImgContainer : styles.card_imgContainer}`}>
         <img
-          src={isImage ? images[0] : otherImg}
-          className={isImage ? styles.card_imgContainer_picture : null}
+          src={images ? `https://strapi.cleverland.by${images}` : otherImg}
+          className={images ? styles.card_imgContainer_picture : null}
           alt='book'
         />
       </div>
@@ -36,18 +48,26 @@ export const Card = ({ name, isImage, images, rating, author, status: { state, d
         <div className={styles.descriptionContainer}>
           <div>
             <h2 className={styles.name}>{name}</h2>
-            <p className={styles.author}>{author}</p>
+            <p className={styles.author}>
+              {author.map((elem, index) => {
+                if (index === author.length - 1) {
+                  return `${elem}`;
+                }
+
+                return `${elem}, `;
+              })}
+            </p>
           </div>
           <div className={styles.ratingContainer}>
-            <Rating rating={rating} /> <BookingBtn state={state} date={date} />
+            <Rating rating={rating} /> <BookingBtn booking={booking} delivery={delivery} />
           </div>
         </div>
       ) : (
         <React.Fragment>
           <Rating rating={rating} />
           <h2 className={styles.card_name}>{name}</h2>
-          <p className={styles.card_author}>{author}</p>
-          <BookingBtn state={state} date={date} />
+          <p className={styles.card_author}>{author.map((elem) => `${elem}\n`)}</p>
+          <BookingBtn booking={booking} delivery={delivery} />
         </React.Fragment>
       )}
     </Link>

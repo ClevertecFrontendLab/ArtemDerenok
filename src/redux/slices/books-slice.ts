@@ -14,7 +14,7 @@ interface IBook {
     title: string,
     authors: string[],
     image: {
-        url: string
+        url: string | null,
     },
     categories: string[],
     id: number,

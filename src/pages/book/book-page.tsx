@@ -67,7 +67,7 @@ export const BookPage = () => {
         <div>
           <h2>{data?.name}</h2>
           <p className={styles.author}>{data?.author}</p>
-          <BookingBtn state={data?.status.state} date={data?.status.date} />
+          {/* <BookingBtn state={data?.status.state} date={data?.status.date} /> */}
           <h4>О книге</h4>
           <p className={styles.text}>{data?.decsription}</p>
         </div>

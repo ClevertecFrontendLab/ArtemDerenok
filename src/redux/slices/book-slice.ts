@@ -5,7 +5,7 @@ import { getBookById } from '../../api/books';
 
 
 interface IImages {
-    url: string,
+    url: string | null,
 }
 
 interface IComment {
