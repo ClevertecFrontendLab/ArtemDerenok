@@ -80,6 +80,9 @@ const bookSlice = createSlice({
     reducers: {
         setBook: (state, actions: PayloadAction<IBook>) => {
             state.book = actions.payload;
+        },
+        resetErrorStatusBook: (state) => {
+            state.error = false;
         }
     },
     extraReducers: (builder) => {
@@ -100,3 +103,5 @@ const bookSlice = createSlice({
 const { actions, reducer } = bookSlice;
 
 export const bookReducer = reducer;
+
+export const { setBook, resetErrorStatusBook } = actions;

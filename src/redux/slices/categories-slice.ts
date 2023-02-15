@@ -34,6 +34,9 @@ export const categoriesSlice = createSlice({
     reducers: {
         setCategories: (state, action: PayloadAction<ICategorie[]>) => {
             state.categories = action.payload
+        },
+        resetErrorStatusCategories: (state) => {
+            state.error = false;
         }
     },
     extraReducers: (builder) => {
@@ -55,3 +58,5 @@ export const categoriesSlice = createSlice({
 const { actions, reducer, } = categoriesSlice;
 
 export const categoriesReducer = reducer;
+
+export const { setCategories, resetErrorStatusCategories } = actions;

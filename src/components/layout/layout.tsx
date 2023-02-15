@@ -1,10 +1,15 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useTypeSelector } from '../../hooks/use-type-selector';
 import { BookPage } from '../../pages/book/book-page';
 import { MainPage } from '../../pages/main/main-page';
 import { Terms } from '../../pages/terms/terms';
+import { resetErrorStatusBook } from '../../redux/slices/book-slice';
+import { resestErrorStatusBooks } from '../../redux/slices/books-slice';
+import { resetErrorStatusCategories } from '../../redux/slices/categories-slice';
+import { Error } from '../error/error';
 import { Footer } from '../footer/footer';
 import { Header } from '../header/header';
 import { Spinner } from '../spinner/spinner';
@@ -12,14 +17,25 @@ import { Spinner } from '../spinner/spinner';
 import styles from './layout.module.scss';
 
 export const Layout = () => {
-  const loadingCategories = useTypeSelector((state) => state.categoriesReducer.loading);
-  const loadingBooks = useTypeSelector((state) => state.booksReducer.loading);
-  const loadingBook = useTypeSelector((state) => state.bookReducer.loading);
+  const categories = useTypeSelector((state) => state.categoriesReducer);
+  const books = useTypeSelector((state) => state.booksReducer);
+  const book = useTypeSelector((state) => state.bookReducer);
+
+  const dispatch = useAppDispatch();
+
+  const handleShowErrorMessage = () => {
+    dispatch(resetErrorStatusCategories());
+    dispatch(resestErrorStatusBooks());
+    dispatch(resetErrorStatusBook());
+  };
 
   return (
     <React.Fragment>
-      {loadingCategories || loadingBook || loadingBooks ? <Spinner /> : null}
+      {categories.loading || book.loading || books.loading ? <Spinner /> : null}
       <div className={styles.container}>
+        {categories.error || book.error || books.error ? (
+          <Error handleShowErrorMessage={handleShowErrorMessage} />
+        ) : null}
         <Header />
         <div className={styles.container_content}>
           <Routes>
