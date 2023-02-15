@@ -21,7 +21,7 @@ interface IBook {
     booking: null | {
         id: number,
         order: boolean,
-        dataOrder: string,
+        dateOrder: string,
         customerId: number,
         customerFirstName: string,
         customerLastName: string,
@@ -29,8 +29,8 @@ interface IBook {
     delivery: null | {
         id: number,
         handed: true,
-        dataHandedFrom: string,
-        dataHandedTo: string,
+        dateHandedFrom: string,
+        dateHandedTo: string,
         recipientId: number,
         recipientFirstName: string,
         recipientLastName: string,

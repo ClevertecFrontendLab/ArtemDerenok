@@ -11,9 +11,15 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
-interface ISlider {
-  images: string[] | never[];
+interface IImage {
+  url: string | null;
 }
+
+interface ISlider {
+  images: IImage[];
+}
+
+const path = 'https://strapi.cleverland.by';
 
 export const Slider = ({ images }: ISlider) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass>();
@@ -21,16 +27,15 @@ export const Slider = ({ images }: ISlider) => {
   return (
     <React.Fragment>
       <Swiper
-        // data-test-id='slide-big'
         spaceBetween={10}
         navigation={true}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
         modules={[FreeMode, Navigation, Thumbs]}
         className={styles.mySwiper2}
       >
-        {images.map((elem, index) => (
+        {images.map((elem) => (
           <SwiperSlide key={nanoid()}>
-            <img src={elem} alt='book' />
+            <img src={`${path}${elem.url}`} alt='book' />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -47,7 +52,7 @@ export const Slider = ({ images }: ISlider) => {
           ? null
           : images.map((elem) => (
               <SwiperSlide data-test-id='slide-mini' key={nanoid()}>
-                <img src={elem} alt='book' />
+                <img src={`${path}${elem.url}`} alt='book' />
               </SwiperSlide>
             ))}
       </Swiper>

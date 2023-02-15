@@ -4,7 +4,6 @@ import { nanoid } from 'nanoid';
 import { Card } from '../../components/card/card';
 import { FiltrationBar } from '../../components/filtration/filtration-bar';
 import { Menu } from '../../components/menu/menu';
-import { Spinner } from '../../components/spinner/spinner';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useTypeSelector } from '../../hooks/use-type-selector';
 import { getBooksThunk } from '../../redux/slices/books-slice';
@@ -17,7 +16,7 @@ export const MainPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const { books, loading, error } = useTypeSelector((state) => state.booksReducer);
+  const { books } = useTypeSelector((state) => state.booksReducer);
 
   const changeIsPlate = () => {
     setIsPlate(true);

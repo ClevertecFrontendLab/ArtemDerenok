@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import bookImg from '../../assets/algoritms.png';
 import otherImg from '../../assets/icon_other.png';
 import { BookingBtn } from '../booking-btn/booking-btn';
 import { Rating } from '../rating/rating';
@@ -16,7 +15,7 @@ interface ICard {
   booking: null | {
     id: number;
     order: boolean;
-    dataOrder: string;
+    dateOrder: string;
     customerId: number;
     customerFirstName: string;
     customerLastName: string;
@@ -24,8 +23,8 @@ interface ICard {
   delivery: null | {
     id: number;
     handed: true;
-    dataHandedFrom: string;
-    dataHandedTo: string;
+    dateHandedFrom: string;
+    dateHandedTo: string;
     recipientId: number;
     recipientFirstName: string;
     recipientLastName: string;

@@ -8,9 +8,15 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-interface ISliderTablet {
-  images: string[] | never[];
+interface IImage {
+  url: string | null;
 }
+
+interface ISliderTablet {
+  images: IImage[];
+}
+
+const path = 'https://strapi.cleverland.by';
 
 export const SliderTablet = ({ images }: ISliderTablet) => (
   <Swiper
@@ -23,7 +29,7 @@ export const SliderTablet = ({ images }: ISliderTablet) => (
   >
     {images.map((elem) => (
       <SwiperSlide data-test-id='slide-mini' key={nanoid()}>
-        <img src={elem} alt='book' />
+        <img src={`${path}${elem.url}`} alt='book' />
       </SwiperSlide>
     ))}
   </Swiper>

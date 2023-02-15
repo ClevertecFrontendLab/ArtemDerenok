@@ -4,7 +4,7 @@ interface IBookingBtn {
   booking: null | {
     id: number;
     order: boolean;
-    dataOrder: string;
+    dateOrder: string;
     customerId: number;
     customerFirstName: string;
     customerLastName: string;
@@ -12,8 +12,8 @@ interface IBookingBtn {
   delivery: null | {
     id: number;
     handed: true;
-    dataHandedFrom: string;
-    dataHandedTo: string;
+    dateHandedFrom: string;
+    dateHandedTo: string;
     recipientId: number;
     recipientFirstName: string;
     recipientLastName: string;
@@ -29,6 +29,6 @@ export const BookingBtn = ({ booking, delivery }: IBookingBtn) => (
       ? 'Забронировать'
       : booking.order === true
       ? 'Забронированно'
-      : `Занято до ${delivery?.dataHandedTo}`}
+      : `Занято до ${delivery?.dateHandedTo}`}
   </button>
 );

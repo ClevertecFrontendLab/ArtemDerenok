@@ -63,8 +63,14 @@ interface IBook {
     histories: IHistories[]
 }
 
-const initialState = {
-    book: {},
+interface IInitialState {
+    book: null | IBook,
+    loading: boolean,
+    error: boolean,
+}
+
+const initialState: IInitialState = {
+    book: null,
     loading: false,
     error: false,
 }
@@ -90,7 +96,7 @@ const bookSlice = createSlice({
             state.loading = true;
             state.error = false;
         });
-        builder.addCase(getBookThunk.fulfilled, (state, action: PayloadAction<IBook[]>) => {
+        builder.addCase(getBookThunk.fulfilled, (state, action: PayloadAction<IBook>) => {
             state.loading = false;
             state.book = action.payload;
         });
