@@ -1,7 +1,7 @@
 import styles from './spinner.module.scss';
 
 export const Spinner = () => (
-  <div className={styles.container}>
+  <div className={styles.container} data-test-id='loader'>
     <svg
       className={styles.spinner}
       width='70'

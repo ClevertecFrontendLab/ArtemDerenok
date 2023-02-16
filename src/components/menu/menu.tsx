@@ -89,18 +89,16 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
           <NavLink
             data-test-id={isBurger === false ? 'navigation-books' : 'burger-books'}
             onClick={showMobileMenu}
-            to='/books/all-books'
+            to='/books/all'
           >
             {({ isActive }) => <span className={isActive ? styles.active : undefined}>Все книги</span>}
           </NavLink>{' '}
-          <span className={styles.secondMenu_countBooksLabel}>10</span>
         </li>
         {categories.map((elem) => (
           <li key={nanoid()} className={styles.secondMenu_link}>
             <NavLink onClick={showMobileMenu} to={`/books/${elem.path}`}>
               {({ isActive }) => <span className={isActive ? styles.active : undefined}>{elem.name}</span>}
             </NavLink>{' '}
-            <span className={styles.secondMenu_countBooksLabel}>10</span>
           </li>
         ))}
       </ul>

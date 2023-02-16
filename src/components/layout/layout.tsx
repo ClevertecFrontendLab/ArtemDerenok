@@ -39,10 +39,10 @@ export const Layout = () => {
         <Header />
         <div className={styles.container_content}>
           <Routes>
-            <Route path='/' element={<Navigate to='/books/all-books' />} />
+            <Route path='/' element={<Navigate to='/books/all' />} />
             <Route path='/books' element={<MainPage />} />
             <Route path='/books/:categories' element={<MainPage />} />
-            <Route path='/books/:categories/book/:bookId' element={<BookPage />} />
+            <Route path='/books/all/:bookId' element={<BookPage />} />
             <Route path='contract' element={<Terms content='contract' />} />
             <Route path='rules' element={<Terms content='rules' />} />
           </Routes>
