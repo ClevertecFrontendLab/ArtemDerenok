@@ -55,7 +55,7 @@ export const BookPage = () => {
           </p>
         </div>
         <div className={styles.bookPage_containerDescription}>
-          <div className={data?.isImage ? styles.imageBookSlider : styles.imageBook}>
+          <div className={bookData.images ? styles.imageBookSlider : styles.imageBook}>
             {bookData.images ? (
               <React.Fragment>
                 <div className={styles.desctopSlider}>
@@ -167,6 +167,7 @@ export const BookPage = () => {
                       date={elem.createdAt}
                       text={elem.text}
                       rating={Number(elem.rating)}
+                      avatar={elem.user.avatarUrl}
                     />
                   ))
                 : null}

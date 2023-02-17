@@ -35,7 +35,7 @@ interface ICard {
 
 export const Card = ({ name, images, rating, author, booking, delivery, id, isList }: ICard) => (
   <div className={`${styles.card} ${isList ? styles.list : null}`} data-test-id='card'>
-    <Link className={`${isList ? styles.linkList : styles.link}`} to={`book/${id}`}>
+    <Link className={`${isList ? styles.linkList : styles.link}`} to={`${id}`}>
       <div className={`${isList ? styles.listImgContainer : styles.card_imgContainer}`}>
         <img
           src={images ? `https://strapi.cleverland.by${images}` : otherImg}
