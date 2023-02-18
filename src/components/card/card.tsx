@@ -47,15 +47,7 @@ export const Card = ({ name, images, rating, author, booking, delivery, id, isLi
         <div className={styles.descriptionContainer}>
           <div>
             <h2 className={styles.name}>{name}</h2>
-            <p className={styles.author}>
-              {author.map((elem, index) => {
-                if (index === author.length - 1) {
-                  return `${elem}`;
-                }
-
-                return `${elem}, `;
-              })}
-            </p>
+            <p className={styles.author}>{author.join(', ')}</p>
           </div>
           <div className={styles.ratingContainer}>
             <Rating rating={rating} /> <BookingBtn booking={booking} delivery={delivery} />
@@ -65,7 +57,7 @@ export const Card = ({ name, images, rating, author, booking, delivery, id, isLi
         <React.Fragment>
           <Rating rating={rating} />
           <h2 className={styles.card_name}>{name}</h2>
-          <p className={styles.card_author}>{author.map((elem) => `${elem}\n`)}</p>
+          <p className={styles.card_author}>{author.join('\n')}</p>
           <BookingBtn booking={booking} delivery={delivery} />
         </React.Fragment>
       )}

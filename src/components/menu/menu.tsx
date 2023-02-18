@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
+import { ReactComponent as DownArrow } from '../../assets/down-arrow.svg';
+import { ReactComponent as UpArrow } from '../../assets/up-arrow.svg';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useTypeSelector } from '../../hooks/use-type-selector';
 import { getCategoriesThunk } from '../../redux/slices/categories-slice';
@@ -46,40 +48,17 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
         <NavLink
           data-test-id={isBurger === false ? 'navigation-showcase' : 'burger-showcase'}
           onClick={handleMenu}
-          to='/books'
+          to='/books/all'
           className={styles.bookShowcase}
         >
           {({ isActive }) => (
             <div>
               <span className={isActive ? styles.active : undefined}>Витрина книг</span>
-              <svg
-                ref={downArrow}
-                width='14'
-                height='8'
-                viewBox='0 0 14 8'
-                xmlns='http://www.w3.org/2000/svg'
-                className={isActive ? styles.arrowsActive : styles.arrowUsual}
-              >
-                <path
-                  fillRule='evenodd'
-                  clipRule='evenodd'
-                  d='M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7 5.58579L12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L7.70711 7.70711C7.31658 8.09763 6.68342 8.09763 6.29289 7.70711L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z'
-                />
-              </svg>
-              <svg
+              <DownArrow ref={downArrow} className={isActive ? styles.arrowsActive : styles.arrowUsual} />
+              <UpArrow
                 ref={upArrow}
                 className={`${styles.hide} ${isActive ? styles.arrowsActive : styles.arrowUsual}`}
-                width='14'
-                height='8'
-                viewBox='0 0 14 8'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <path
-                  fillRule='evenodd'
-                  clipRule='evenodd'
-                  d='M6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893L13.7071 6.29289C14.0976 6.68342 14.0976 7.31658 13.7071 7.70711C13.3166 8.09763 12.6834 8.09763 12.2929 7.70711L7 2.41421L1.70711 7.70711C1.31658 8.09763 0.683417 8.09763 0.292893 7.70711C-0.0976311 7.31658 -0.0976311 6.68342 0.292893 6.29289L6.29289 0.292893Z'
-                />
-              </svg>
+              />
             </div>
           )}
         </NavLink>
