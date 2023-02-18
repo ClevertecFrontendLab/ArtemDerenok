@@ -1,0 +1,39 @@
+@import '../../variables';
+.mainPage {
+  width: 824.5px;
+  position: relative;
+  margin-left: 30px;
+
+  &_plate {
+    padding-top: 32px;
+    padding-bottom: 62px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 21.5px;
+  }
+}
+
+@media (min-width: $breakpoint-mobile-min) and (max-width: $breakpoint-tablet-max) {
+  .menuContainer {
+    display: none;
+  }
+
+  .mainPage {
+    width: 100%;
+    margin-left: 0;
+
+    &_plate {
+      justify-content: space-between;
+    }
+  }
+}
+
+@media (min-width: $breakpoint-mobile-min) and (max-width: 399.99px) {
+  .mainPage {
+    &_plate {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}

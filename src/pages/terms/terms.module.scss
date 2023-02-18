@@ -1,0 +1,75 @@
+@import '../../variables';
+
+.terms {
+  width: 824.5px;
+  padding-left: 30px;
+  h2 {
+    font-family: $font_main;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 0.1px;
+    color: $main_dark;
+  }
+
+  ol {
+    list-style-type: decimal;
+    padding-left: 20px;
+    padding-bottom: 62px;
+
+    li {
+      padding-top: 32px;
+      font-family: $font_main;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.1px;
+      color: $main_dark;
+    }
+
+    ul {
+      li {
+        padding-top: 16px !important;
+        padding-left: 30px;
+        font-family: $font_main;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.1px;
+        color: $main_dark;
+      }
+    }
+  }
+}
+
+@media (min-width: $breakpoint-mobile-min) and (max-width: $breakpoint-tablet-max) {
+  .menuContainer {
+    display: none;
+  }
+
+  .terms {
+    width: 100%;
+    padding-left: 15px;
+    ol {
+      list-style-type: decimal;
+      padding-left: 10px;
+      padding-bottom: 62px;
+    }
+  }
+}
+
+@media (min-width: $breakpoint-mobile-min) and (max-width: $breakpoint-tablet-max) {
+  .terms {
+    ol {
+      ul {
+        li {
+          font-size: 15px;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+}

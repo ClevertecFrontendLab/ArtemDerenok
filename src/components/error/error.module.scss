@@ -1,0 +1,51 @@
+@import '../../variables';
+
+.container {
+  position: fixed;
+  top: 75px;
+  z-index: 1000;
+  display: flex;
+  border: 1px solid black;
+  width: 1110px;
+  background-color: $background_pink;
+  border: 1.5px solid $border_red;
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  align-items: center;
+  padding: 24px 32px 24px 32px;
+}
+
+.image {
+}
+
+.text {
+  font-family: $font_main;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: $main_dark;
+  width: 100%;
+}
+
+.button {
+  all: unset;
+  background-image: url('../../assets/close-icon.svg');
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+@media (min-width: $breakpoint-tablet-min) and (max-width: $breakpoint-tablet-max) {
+  .container {
+    max-width: 655px;
+  }
+}
+
+@media (min-width: $breakpoint-mobile-min) and (max-width: $breakpoint-mobile-max) {
+  .container {
+    max-width: 305px;
+  }
+}

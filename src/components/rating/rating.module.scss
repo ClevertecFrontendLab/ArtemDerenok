@@ -1,0 +1,15 @@
+@import '../../variables';
+
+.rating {
+  margin: 10px 0 22px 8px;
+  font-family: $font_main;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.1px;
+  color: $gray_light;
+  display: flex;
+  gap: 10px;
+  max-width: 140px;
+}

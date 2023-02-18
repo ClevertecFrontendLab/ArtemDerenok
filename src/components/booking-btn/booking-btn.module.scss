@@ -1,0 +1,68 @@
+@import '../../variables';
+
+.book {
+  all: unset;
+  width: 166px;
+  height: 40px;
+  align-self: center;
+  text-align: center;
+  border-radius: 20px;
+  background-color: $main_orange;
+  font-family: $font_main;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  color: $main_white;
+  margin-bottom: 16px;
+  cursor: pointer;
+  &:hover {
+    background-color: $link_hover;
+  }
+
+  &:active {
+    background-color: $link_active;
+  }
+}
+
+.booked {
+  all: unset;
+  width: 166px;
+  height: 40px;
+  align-self: center;
+  text-align: center;
+  border-radius: 20px;
+  font-family: $font_main;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  border: 1px solid $gray_light;
+  color: $main_dark;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.busy {
+  all: unset;
+  width: 166px;
+  height: 40px;
+  align-self: center;
+  text-align: center;
+  border-radius: 20px;
+  font-family: $font_main;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  border: 1px solid $gray_light;
+  color: $gray_light;
+  margin-bottom: 16px;
+  cursor: pointer;
+}

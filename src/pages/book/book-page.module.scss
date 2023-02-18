@@ -1,0 +1,344 @@
+@import '../../variables';
+
+.bookPage {
+  padding-bottom: 42px;
+
+  &_rout {
+    background-color: $white_gray;
+    font-family: $font_main;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.1px;
+    color: $gray_light;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  h4 {
+    font-family: $font_main;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: 0.1px;
+    color: $main_dark;
+  }
+
+  &_containerDescription {
+    display: flex;
+    gap: 30px;
+    padding-top: 42px;
+
+    button {
+      width: 350px;
+    }
+
+    .imageBook {
+      width: 445px;
+      height: 594px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid $gray_light;
+      border-radius: 10px;
+    }
+
+    .imageBookSlider {
+      width: 445px;
+      height: 594px;
+      .desctopSlider {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .mobileSlider {
+        display: none;
+      }
+    }
+
+    div {
+      max-width: 635px;
+      h2 {
+        font-family: $font_main;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 40px;
+        letter-spacing: 0.1px;
+        color: $main_dark;
+      }
+      h4 {
+        padding-top: 51px;
+        padding-bottom: 32px;
+      }
+
+      .author {
+        padding-top: 24px;
+        padding-bottom: 32px;
+        font-family: $font_main;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 28px;
+        letter-spacing: 0.1px;
+        color: $gray_light;
+      }
+
+      .text {
+        font-family: $font_main;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.1px;
+        color: $main_dark;
+      }
+    }
+  }
+
+  &_containerInfo {
+    h4 {
+      padding-top: 42px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid $gray_border_light;
+      max-width: 350px;
+    }
+
+    .rating {
+      padding-top: 16px;
+      padding-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+
+      div {
+        margin: 0;
+      }
+
+      p {
+        font-family: $font_main;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 28px;
+        letter-spacing: 0.1px;
+        color: $main_dark;
+      }
+    }
+
+    .containerDetails {
+      display: flex;
+      padding-top: 16px;
+      gap: 146px;
+
+      table {
+        tr {
+          :first-child {
+            font-family: $font_main;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 0.1px;
+            color: $gray_light;
+          }
+          :last-child {
+            font-family: $font_main;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: 0.1px;
+            color: $main_dark;
+            padding-left: 72px;
+          }
+        }
+      }
+    }
+  }
+
+  .reviewBtn {
+    all: unset;
+    display: block;
+    background-color: $main_orange;
+    font-family: $font_main;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    color: $main_white;
+    width: 320px;
+    height: 52px;
+    text-align: center;
+    border-radius: 30px;
+    cursor: pointer;
+    &:hover {
+      background-color: $link_hover;
+    }
+    &:active {
+      background-color: $link_active;
+    }
+  }
+}
+
+.reviewHeading {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+
+  &_imgContainer {
+    cursor: pointer;
+  }
+}
+
+.reviewContainer {
+  display: block;
+}
+
+.hideReview {
+  display: none;
+}
+
+.hide {
+  display: none;
+}
+
+@media (min-width: $breakpoint-mobile-min) and (max-width: $breakpoint-tablet-max) {
+  .bookPage {
+    padding-left: 10px;
+    padding-right: 10px;
+    &_containerDescription {
+      display: block;
+      .imageBook {
+        max-width: 139px;
+        max-height: 198px;
+        align-self: baseline;
+        display: inline-block;
+        float: left;
+        max-width: 136px;
+        margin-right: 32px;
+        position: relative;
+        img {
+          margin: 0;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      .imageBookSlider {
+        width: auto;
+        height: auto;
+        align-self: baseline;
+        display: inline-block;
+        float: left;
+        max-width: 136px;
+        margin-right: 32px;
+
+        .desctopSlider {
+          display: none;
+        }
+        .mobileSlider {
+          display: block;
+        }
+      }
+
+      div {
+        max-width: none;
+        h2 {
+          font-size: 24px;
+          line-height: 30px;
+        }
+        h4 {
+          padding-top: 51px;
+          padding-bottom: 32px;
+        }
+
+        .author {
+          font-weight: 600;
+          font-size: 14px;
+          line-height: 18px;
+        }
+      }
+    }
+    .containerDetails {
+      gap: 30px;
+    }
+    .reviewBtn {
+      width: 100%;
+    }
+  }
+}
+
+@media (min-width: $breakpoint-mobile-min) and (max-width: $breakpoint-mobile-max) {
+  .bookPage {
+    margin: auto;
+    &_containerDescription {
+      display: flex;
+      flex-direction: column;
+      .imageBook {
+        float: none;
+        align-self: center;
+        margin-right: 0;
+      }
+
+      .imageBookSlider {
+        margin: auto;
+      }
+
+      div {
+        h2 {
+          font-size: 18px;
+          line-height: 28px;
+        }
+      }
+      button {
+        width: 95%;
+      }
+      div {
+        .text {
+          font-size: 12px;
+          line-height: 18px;
+        }
+      }
+    }
+
+    .containerDetails {
+      flex-direction: column;
+      padding-top: 16px;
+      gap: 10px;
+      table {
+        tr {
+          :first-child {
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 16px;
+            letter-spacing: 0.2px;
+          }
+          :last-child {
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 16px;
+            letter-spacing: 0.2px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.zeroReview {
+  font-family: $font_main;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.1px;
+  color: $gray_light;
+}
