@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
@@ -20,6 +20,7 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
   const downArrow = useRef<SVGSVGElement>(null);
   const upArrow = useRef<SVGSVGElement>(null);
   const categories = useTypeSelector((state) => state.categoriesReducer.categories);
+  const categoriesCount = useTypeSelector((state) => state.booksReducer.categoriesCount);
   const dispatch = useAppDispatch();
 
   const handleMenu = () => {
@@ -76,7 +77,12 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
         {categories.map((elem) => (
           <li key={nanoid()} className={styles.secondMenu_link}>
             <NavLink onClick={showMobileMenu} to={`/books/${elem.path}`}>
-              {({ isActive }) => <span className={isActive ? styles.active : undefined}>{elem.name}</span>}
+              {({ isActive }) => (
+                <React.Fragment>
+                  <span className={isActive ? styles.active : undefined}>{elem.name}</span>{' '}
+                  <span className={styles.secondMenu_countBooksLabel}>{categoriesCount[elem.name].books.length}</span>
+                </React.Fragment>
+              )}
             </NavLink>{' '}
           </li>
         ))}

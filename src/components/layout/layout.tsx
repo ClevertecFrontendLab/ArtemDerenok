@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
@@ -7,7 +7,7 @@ import { BookPage } from '../../pages/book/book-page';
 import { MainPage } from '../../pages/main/main-page';
 import { Terms } from '../../pages/terms/terms';
 import { resetErrorStatusBook } from '../../redux/slices/book-slice';
-import { resestErrorStatusBooks } from '../../redux/slices/books-slice';
+import { filterCategories, getBooksThunk, resestErrorStatusBooks } from '../../redux/slices/books-slice';
 import { resetErrorStatusCategories } from '../../redux/slices/categories-slice';
 import { Error } from '../error/error';
 import { Footer } from '../footer/footer';
@@ -28,6 +28,12 @@ export const Layout = () => {
     dispatch(resestErrorStatusBooks());
     dispatch(resetErrorStatusBook());
   };
+
+  useEffect(() => {
+    dispatch(getBooksThunk()).then(() => {
+      dispatch(filterCategories());
+    });
+  }, [dispatch]);
 
   return (
     <React.Fragment>

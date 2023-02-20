@@ -38,23 +38,83 @@ interface IBook {
     histories: null | IHistories[]
 }
 
+type TCategories = {
+    [key: string]: {
+        path: string,
+        name: string,
+        books: IBook[],
+    },
+}
+
 interface IInitialState {
     books: IBook[],
     loading: boolean,
     error: boolean,
+    categoriesCount: TCategories;
 }
 
 const initialState: IInitialState = {
     books: [],
     loading: false,
     error: false,
+    categoriesCount: {
+        'Бизнес': {
+            path: 'business',
+            name: 'Бизнес',
+            books: [],
+        },
+        'Психология': {
+            name: 'Психология',
+            path: 'psychology',
+            books: [],
+        },
+        'Родителям': {
+            name: 'Родителям',
+            path: 'parents',
+            books: [],
+        },
+        'Нон-фикшн': {
+            name: 'Нон-фикшн',
+            path: 'non-fiction',
+            books: [],
+        },
+        'Художественная литература': {
+            name: 'Художественная литература',
+            path: 'fiction',
+            books: [],
+        },
+        'Программирование': {
+            name: 'Программирование',
+            path: 'programming',
+            books: [],
+        },
+        'Хобби': {
+            name: 'Хобби',
+            path: 'hobby',
+            books: [],
+        },
+        'Дизайн': {
+            name: 'Дизайн',
+            path: 'design',
+            books: [],
+        },
+        'Детские': {
+            name: 'Детские',
+            path: 'childish',
+            books: [],
+        },
+        'Другое': {
+            name: 'Другое',
+            path: 'other',
+            books: [],
+        },
+    }
 }
 
 export const getBooksThunk = createAsyncThunk(
     'books/getBooks',
     () => getAllBooks()
 )
-
 
 const booksSlice = createSlice({
     name: 'books',
@@ -65,6 +125,13 @@ const booksSlice = createSlice({
         },
         resestErrorStatusBooks: (state) => {
             state.error = false;
+        },
+        filterCategories: (state) => {
+            state.books.forEach((elem1) => {
+                elem1.categories.forEach((elem2) => {
+                    state.categoriesCount[elem2].books.push(elem1);
+                })
+            });
         }
     },
     extraReducers: (builder) => {
@@ -87,4 +154,4 @@ const { actions, reducer } = booksSlice;
 
 export const booksReducer = reducer;
 
-export const { setBooks, resestErrorStatusBooks } = actions;
+export const { setBooks, resestErrorStatusBooks, filterCategories } = actions;

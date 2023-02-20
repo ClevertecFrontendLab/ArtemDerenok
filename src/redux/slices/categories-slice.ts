@@ -9,7 +9,6 @@ interface ICategorie {
     id: number,
 }
 
-
 interface IInitialState {
     categories: ICategorie[],
     error: boolean,
