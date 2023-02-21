@@ -7,7 +7,12 @@ import { BookPage } from '../../pages/book/book-page';
 import { MainPage } from '../../pages/main/main-page';
 import { Terms } from '../../pages/terms/terms';
 import { resetErrorStatusBook } from '../../redux/slices/book-slice';
-import { filterCategories, getBooksThunk, resestErrorStatusBooks } from '../../redux/slices/books-slice';
+import {
+  filterByDescBooks,
+  filterCategories,
+  getBooksThunk,
+  resestErrorStatusBooks,
+} from '../../redux/slices/books-slice';
 import { resetErrorStatusCategories } from '../../redux/slices/categories-slice';
 import { Error } from '../error/error';
 import { Footer } from '../footer/footer';
@@ -32,6 +37,7 @@ export const Layout = () => {
   useEffect(() => {
     dispatch(getBooksThunk()).then(() => {
       dispatch(filterCategories());
+      dispatch(filterByDescBooks('all'));
     });
   }, [dispatch]);
 
@@ -46,7 +52,6 @@ export const Layout = () => {
         <div className={styles.container_content}>
           <Routes>
             <Route path='/' element={<Navigate to='/books/all' />} />
-            <Route path='/books' element={<MainPage />} />
             <Route path='/books/:categories' element={<MainPage />} />
             <Route path='/books/all/:bookId' element={<BookPage />} />
             <Route path='/books/:categories/:bookId' element={<BookPage />} />

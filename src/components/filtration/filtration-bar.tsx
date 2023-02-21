@@ -1,8 +1,11 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { ReactComponent as CloseSvg } from '../../assets/close-icon.svg';
 import { ReactComponent as ListSvg } from '../../assets/list-icon.svg';
 import { ReactComponent as PlatesSvg } from '../../assets/plates.svg';
+import { useAppDispatch } from '../../hooks/use-app-dispatch';
+import { filterByDescBooks, filterByIncrBooks, mapCategories } from '../../redux/slices/books-slice';
 
 import styles from './filtration-bar.module.scss';
 
@@ -11,9 +14,18 @@ interface IFiltrationBar {
   isList: boolean;
   changeIsPlate: () => void;
   changeIsList: () => void;
+  sortType: boolean;
+  handleTypeSort: () => void;
 }
 
-export const FiltrationBar = ({ isPlate, isList, changeIsPlate, changeIsList }: IFiltrationBar) => {
+export const FiltrationBar = ({
+  isPlate,
+  isList,
+  changeIsPlate,
+  changeIsList,
+  sortType,
+  handleTypeSort,
+}: IFiltrationBar) => {
   const filterRef = useRef<HTMLDivElement>(null);
   const btnsRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
@@ -64,7 +76,21 @@ export const FiltrationBar = ({ isPlate, isList, changeIsPlate, changeIsList }: 
       >
         <CloseSvg />
       </button>
-      <div ref={filterRef} className={styles.filtrationBar_filter}>
+      <div
+        data-test-id='sort-rating-button'
+        ref={filterRef}
+        className={`${styles.filtrationBar_filter} ${
+          sortType ? styles.filtrationBar_filter_iconDesc : styles.filtrationBar_filter_iconIncr
+        }`}
+        onClick={handleTypeSort}
+        role='button'
+        tabIndex={0}
+        onKeyDown={(key) => {
+          if (key.code === 'Enter') {
+            handleTypeSort();
+          }
+        }}
+      >
         <span>По рейтингу</span>
       </div>
       <div ref={btnsRef} className={styles.filtrationBar_view}>

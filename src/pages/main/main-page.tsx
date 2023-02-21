@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
@@ -8,34 +7,30 @@ import { FiltrationBar } from '../../components/filtration/filtration-bar';
 import { Menu } from '../../components/menu/menu';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useTypeSelector } from '../../hooks/use-type-selector';
-import { filterCategories, getBooksThunk } from '../../redux/slices/books-slice';
+import { filterByDescBooks, filterByIncrBooks, mapCategories } from '../../redux/slices/books-slice';
 
 import styles from './main-page.module.scss';
-
-type TMapCategories = {
-  [key: string]: string;
-};
-
-const mapCategories: TMapCategories = {
-  business: 'Бизнес',
-  psychology: 'Психология',
-  parents: 'Родителям',
-  'non-fiction': 'Нон-фикшн',
-  fiction: 'Художественная литература',
-  programming: 'Программирование',
-  hobby: 'Хобби',
-  design: 'Дизайн',
-  childish: 'Детские',
-  other: 'Другое',
-};
 
 export const MainPage = () => {
   const [isPlate, setIsPlate] = useState(true);
   const [isList, setIsList] = useState(false);
+  const [sortType, setSortType] = useState(true);
+
+  const dispatch = useAppDispatch();
 
   const { categories } = useParams();
 
   const { books, categoriesCount } = useTypeSelector((state) => state.booksReducer);
+
+  const handleTypeSort = () => setSortType(!sortType);
+
+  useEffect(() => {
+    if (sortType === true) {
+      dispatch(filterByDescBooks(mapCategories[String(categories)]));
+    } else {
+      dispatch(filterByIncrBooks(mapCategories[String(categories)]));
+    }
+  }, [categories, dispatch, sortType]);
 
   const changeIsPlate = () => {
     setIsPlate(true);
@@ -53,7 +48,14 @@ export const MainPage = () => {
         <Menu isBurger={false} />
       </nav>
       <main className={styles.mainPage}>
-        <FiltrationBar isPlate={isPlate} isList={isList} changeIsPlate={changeIsPlate} changeIsList={changeIsList} />
+        <FiltrationBar
+          isPlate={isPlate}
+          isList={isList}
+          changeIsPlate={changeIsPlate}
+          changeIsList={changeIsList}
+          sortType={sortType}
+          handleTypeSort={handleTypeSort}
+        />
         <div className={styles.mainPage_plate}>
           {categories === 'all' ? (
             books.map((elem) => (

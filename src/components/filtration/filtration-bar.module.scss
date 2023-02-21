@@ -61,11 +61,18 @@
     box-shadow: 0px 2px 4px rgba(191, 196, 201, 0.2), 0px 3px 4px rgba(191, 196, 201, 0.18),
       0px 1px 5px rgba(191, 196, 201, 0.24);
     border-radius: 599px;
-    background-image: url('../../assets/filter-icon.png');
     background-repeat: no-repeat;
     background-position: 0.4cm;
     margin-left: 16px;
     cursor: pointer;
+
+    &_iconDesc {
+      background-image: url('../../assets/filter-icon-desc.png');
+    }
+
+    &_iconIncr {
+      background-image: url('../../assets/filter-icon-incr.png');
+    }
 
     span {
       font-family: $font_main;

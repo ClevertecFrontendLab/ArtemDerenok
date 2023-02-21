@@ -67,6 +67,24 @@ const initialState: IInitialState = {
     }
 }
 
+type TMapCategories = {
+    [key: string]: string;
+};
+
+export const mapCategories: TMapCategories = {
+    all: 'all',
+    business: 'Бизнес',
+    psychology: 'Психология',
+    parents: 'Родителям',
+    'non-fiction': 'Нон-фикшн',
+    fiction: 'Художественная литература',
+    programming: 'Программирование',
+    hobby: 'Хобби',
+    design: 'Дизайн',
+    childish: 'Детские',
+    other: 'Другое',
+};
+
 export const getBooksThunk = createAsyncThunk(
     'books/getBooks',
     () => getAllBooks()
@@ -88,6 +106,20 @@ const booksSlice = createSlice({
                     state.categoriesCount[elem2].push(elem1);
                 })
             });
+        },
+        filterByDescBooks: (state, actions) => {
+            if (actions.payload === 'all') {
+                state.books.sort((a, b) => Number(b.rating) - Number(a.rating))
+            } else {
+                state.categoriesCount[actions.payload].sort((a, b) => Number(b.rating) - Number(a.rating))
+            }
+        },
+        filterByIncrBooks: (state, actions) => {
+            if (actions.payload === 'all') {
+                state.books.sort((a, b) => Number(a.rating) - Number(b.rating))
+            } else {
+                state.categoriesCount[actions.payload].sort((a, b) => Number(a.rating) - Number(b.rating))
+            }
         }
     },
     extraReducers: (builder) => {
@@ -110,4 +142,4 @@ const { actions, reducer } = booksSlice;
 
 export const booksReducer = reducer;
 
-export const { setBooks, resestErrorStatusBooks, filterCategories } = actions;
+export const { setBooks, resestErrorStatusBooks, filterCategories, filterByDescBooks, filterByIncrBooks } = actions;
