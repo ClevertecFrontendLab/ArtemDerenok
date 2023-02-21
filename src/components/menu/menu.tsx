@@ -76,14 +76,21 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
         </li>
         {categories.map((elem) => (
           <li key={nanoid()} className={styles.secondMenu_link}>
-            <NavLink onClick={showMobileMenu} to={`/books/${elem.path}`}>
-              {({ isActive }) => (
-                <React.Fragment>
-                  <span className={isActive ? styles.active : undefined}>{elem.name}</span>{' '}
-                  <span className={styles.secondMenu_countBooksLabel}>{categoriesCount[elem.name].books.length}</span>
-                </React.Fragment>
-              )}
+            <NavLink
+              onClick={showMobileMenu}
+              to={`/books/${elem.path}`}
+              data-test-id={isBurger === false ? `navigation-${elem.path}` : `burger-${elem.path}`}
+            >
+              {({ isActive }) => <span className={isActive ? styles.active : undefined}>{elem.name}</span>}
             </NavLink>{' '}
+            <span
+              data-test-id={
+                isBurger === false ? `navigation-book-count-for-${elem.path}` : `burger-book-count-for-${elem.path}`
+              }
+              className={styles.secondMenu_countBooksLabel}
+            >
+              {categoriesCount[elem.name].books.length}
+            </span>
           </li>
         ))}
       </ul>

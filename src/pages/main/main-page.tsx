@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
@@ -54,33 +55,39 @@ export const MainPage = () => {
       <main className={styles.mainPage}>
         <FiltrationBar isPlate={isPlate} isList={isList} changeIsPlate={changeIsPlate} changeIsList={changeIsList} />
         <div className={styles.mainPage_plate}>
-          {categories === 'all'
-            ? books.map((elem) => (
-                <Card
-                  key={nanoid()}
-                  name={elem.title}
-                  images={elem.image === null ? null : elem.image.url}
-                  rating={elem.rating}
-                  author={elem.authors}
-                  booking={elem.booking}
-                  delivery={elem.delivery}
-                  id={elem.id}
-                  isList={isList}
-                />
-              ))
-            : categoriesCount[mapCategories[String(categories)]].books.map((elem) => (
-                <Card
-                  key={nanoid()}
-                  name={elem.title}
-                  images={elem.image === null ? null : elem.image.url}
-                  rating={elem.rating}
-                  author={elem.authors}
-                  booking={elem.booking}
-                  delivery={elem.delivery}
-                  id={elem.id}
-                  isList={isList}
-                />
-              ))}
+          {categories === 'all' ? (
+            books.map((elem) => (
+              <Card
+                key={nanoid()}
+                name={elem.title}
+                images={elem.image === null ? null : elem.image.url}
+                rating={elem.rating}
+                author={elem.authors}
+                booking={elem.booking}
+                delivery={elem.delivery}
+                id={elem.id}
+                isList={isList}
+              />
+            ))
+          ) : categories === 'other' ? (
+            <div data-test-id='empty-category' className={styles.emptyCategory}>
+              В этой категории книг ещё нет
+            </div>
+          ) : (
+            categoriesCount[mapCategories[String(categories)]].books.map((elem) => (
+              <Card
+                key={nanoid()}
+                name={elem.title}
+                images={elem.image === null ? null : elem.image.url}
+                rating={elem.rating}
+                author={elem.authors}
+                booking={elem.booking}
+                delivery={elem.delivery}
+                id={elem.id}
+                isList={isList}
+              />
+            ))
+          )}
         </div>
       </main>
     </React.Fragment>
