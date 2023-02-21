@@ -74,7 +74,7 @@ export const MainPage = () => {
               В этой категории книг ещё нет
             </div>
           ) : (
-            categoriesCount[mapCategories[String(categories)]].books.map((elem) => (
+            categoriesCount[mapCategories[String(categories)]].map((elem) => (
               <Card
                 key={nanoid()}
                 name={elem.title}

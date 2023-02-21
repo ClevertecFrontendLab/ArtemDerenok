@@ -39,11 +39,7 @@ interface IBook {
 }
 
 type TCategories = {
-    [key: string]: {
-        path: string,
-        name: string,
-        books: IBook[],
-    },
+    [key: string]: IBook[]
 }
 
 interface IInitialState {
@@ -58,56 +54,16 @@ const initialState: IInitialState = {
     loading: false,
     error: false,
     categoriesCount: {
-        'Бизнес': {
-            path: 'business',
-            name: 'Бизнес',
-            books: [],
-        },
-        'Психология': {
-            name: 'Психология',
-            path: 'psychology',
-            books: [],
-        },
-        'Родителям': {
-            name: 'Родителям',
-            path: 'parents',
-            books: [],
-        },
-        'Нон-фикшн': {
-            name: 'Нон-фикшн',
-            path: 'non-fiction',
-            books: [],
-        },
-        'Художественная литература': {
-            name: 'Художественная литература',
-            path: 'fiction',
-            books: [],
-        },
-        'Программирование': {
-            name: 'Программирование',
-            path: 'programming',
-            books: [],
-        },
-        'Хобби': {
-            name: 'Хобби',
-            path: 'hobby',
-            books: [],
-        },
-        'Дизайн': {
-            name: 'Дизайн',
-            path: 'design',
-            books: [],
-        },
-        'Детские': {
-            name: 'Детские',
-            path: 'childish',
-            books: [],
-        },
-        'Другое': {
-            name: 'Другое',
-            path: 'other',
-            books: [],
-        },
+        'Бизнес': [],
+        'Психология': [],
+        'Родителям': [],
+        'Нон-фикшн': [],
+        'Художественная литература': [],
+        'Программирование': [],
+        'Хобби': [],
+        'Дизайн': [],
+        'Детские': [],
+        'Другое': [],
     }
 }
 
@@ -129,7 +85,7 @@ const booksSlice = createSlice({
         filterCategories: (state) => {
             state.books.forEach((elem1) => {
                 elem1.categories.forEach((elem2) => {
-                    state.categoriesCount[elem2].books.push(elem1);
+                    state.categoriesCount[elem2].push(elem1);
                 })
             });
         }

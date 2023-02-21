@@ -89,7 +89,7 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
               }
               className={styles.secondMenu_countBooksLabel}
             >
-              {categoriesCount[elem.name].books.length}
+              {categoriesCount[elem.name].length}
             </span>
           </li>
         ))}
