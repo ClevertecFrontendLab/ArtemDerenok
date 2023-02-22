@@ -1,11 +1,11 @@
-import { useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { ReactComponent as CloseSvg } from '../../assets/close-icon.svg';
 import { ReactComponent as ListSvg } from '../../assets/list-icon.svg';
 import { ReactComponent as PlatesSvg } from '../../assets/plates.svg';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { filterByDescBooks, filterByIncrBooks, mapCategories } from '../../redux/slices/books-slice';
+import { resetFailSearch, searchBook } from '../../redux/slices/books-slice';
 
 import styles from './filtration-bar.module.scss';
 
@@ -16,6 +16,12 @@ interface IFiltrationBar {
   changeIsList: () => void;
   sortType: boolean;
   handleTypeSort: () => void;
+}
+
+function getWindowSize() {
+  const { innerWidth, innerHeight } = window;
+
+  return { innerWidth, innerHeight };
 }
 
 export const FiltrationBar = ({
@@ -31,8 +37,38 @@ export const FiltrationBar = ({
   const searchRef = useRef<HTMLInputElement>(null);
   const crossRef = useRef<HTMLButtonElement>(null);
   const searchOpenRef = useRef<HTMLButtonElement>(null);
+  const [searchValue, setSearchValue] = useState('');
+
+  const { categories } = useParams();
+
+  const [windowSize, setWindowSize] = useState(getWindowSize());
+
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowSize(getWindowSize());
+    }
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
+  const dispatch = useAppDispatch();
+
+  const handleSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+    dispatch(searchBook({ category: String(categories), value: searchValue }));
+  };
+
+  useEffect(() => {
+    setSearchValue('');
+    dispatch(resetFailSearch(categories));
+  }, [categories, dispatch]);
 
   const showSearch = () => {
+    searchRef.current?.classList.add(styles.show);
     searchRef.current?.classList.add(styles.showSearchBar);
     crossRef.current?.classList.add(styles.showCrossBtn);
     filterRef.current?.classList.add(styles.hide);
@@ -50,7 +86,14 @@ export const FiltrationBar = ({
 
   return (
     <div className={styles.filtrationBar}>
-      <input type='search' placeholder='Поиск книги или автора…' className={styles.filtrationBar_search} />
+      <input
+        data-test-id={windowSize.innerWidth > 767 ? 'input-search' : null}
+        type='search'
+        placeholder='Поиск книги или автора…'
+        className={styles.filtrationBar_search}
+        value={searchValue}
+        onChange={handleSearchValue}
+      />
       <button
         type='button'
         ref={searchOpenRef}
@@ -61,11 +104,13 @@ export const FiltrationBar = ({
         {null}
       </button>
       <input
-        data-test-id='input-search'
+        data-test-id={windowSize.innerWidth <= 767 ? 'input-search' : null}
         ref={searchRef}
         type='text'
         placeholder='Поиск книги или автора…'
         className={styles.filtrationBar_search_secondSearch}
+        value={searchValue}
+        onChange={handleSearchValue}
       />
       <button
         data-test-id='button-search-close'

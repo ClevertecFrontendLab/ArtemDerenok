@@ -12,6 +12,7 @@ import {
   filterCategories,
   getBooksThunk,
   resestErrorStatusBooks,
+  setCurrentBooks,
 } from '../../redux/slices/books-slice';
 import { resetErrorStatusCategories } from '../../redux/slices/categories-slice';
 import { Error } from '../error/error';
@@ -37,7 +38,8 @@ export const Layout = () => {
   useEffect(() => {
     dispatch(getBooksThunk()).then(() => {
       dispatch(filterCategories());
-      dispatch(filterByDescBooks('all'));
+      dispatch(setCurrentBooks('all'));
+      dispatch(filterByDescBooks());
     });
   }, [dispatch]);
 

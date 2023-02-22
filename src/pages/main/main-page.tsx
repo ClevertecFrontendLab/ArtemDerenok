@@ -7,7 +7,7 @@ import { FiltrationBar } from '../../components/filtration/filtration-bar';
 import { Menu } from '../../components/menu/menu';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useTypeSelector } from '../../hooks/use-type-selector';
-import { filterByDescBooks, filterByIncrBooks, mapCategories } from '../../redux/slices/books-slice';
+import { filterByDescBooks, filterByIncrBooks, setCurrentBooks } from '../../redux/slices/books-slice';
 
 import styles from './main-page.module.scss';
 
@@ -20,15 +20,16 @@ export const MainPage = () => {
 
   const { categories } = useParams();
 
-  const { books, categoriesCount } = useTypeSelector((state) => state.booksReducer);
+  const { currentBooks, isFailSearchResult } = useTypeSelector((state) => state.booksReducer);
 
   const handleTypeSort = () => setSortType(!sortType);
 
   useEffect(() => {
+    dispatch(setCurrentBooks(categories));
     if (sortType === true) {
-      dispatch(filterByDescBooks(mapCategories[String(categories)]));
+      dispatch(filterByDescBooks());
     } else {
-      dispatch(filterByIncrBooks(mapCategories[String(categories)]));
+      dispatch(filterByIncrBooks());
     }
   }, [categories, dispatch, sortType]);
 
@@ -57,38 +58,30 @@ export const MainPage = () => {
           handleTypeSort={handleTypeSort}
         />
         <div className={styles.mainPage_plate}>
-          {categories === 'all' ? (
-            books.map((elem) => (
-              <Card
-                key={nanoid()}
-                name={elem.title}
-                images={elem.image === null ? null : elem.image.url}
-                rating={elem.rating}
-                author={elem.authors}
-                booking={elem.booking}
-                delivery={elem.delivery}
-                id={elem.id}
-                isList={isList}
-              />
-            ))
-          ) : categories === 'other' ? (
-            <div data-test-id='empty-category' className={styles.emptyCategory}>
-              В этой категории книг ещё нет
-            </div>
+          {isFailSearchResult === false ? (
+            currentBooks.length === 0 ? (
+              <div data-test-id='empty-category' className={styles.emptyCategory}>
+                В этой категории книг ещё нет
+              </div>
+            ) : (
+              currentBooks.map((elem) => (
+                <Card
+                  key={nanoid()}
+                  name={elem.title}
+                  images={elem.image === null ? null : elem.image.url}
+                  rating={elem.rating}
+                  author={elem.authors}
+                  booking={elem.booking}
+                  delivery={elem.delivery}
+                  id={elem.id}
+                  isList={isList}
+                />
+              ))
+            )
           ) : (
-            categoriesCount[mapCategories[String(categories)]].map((elem) => (
-              <Card
-                key={nanoid()}
-                name={elem.title}
-                images={elem.image === null ? null : elem.image.url}
-                rating={elem.rating}
-                author={elem.authors}
-                booking={elem.booking}
-                delivery={elem.delivery}
-                id={elem.id}
-                isList={isList}
-              />
-            ))
+            <div data-test-id='search-result-not-found' className={styles.emptyCategory}>
+              По запросу ничего не найдено
+            </div>
           )}
         </div>
       </main>

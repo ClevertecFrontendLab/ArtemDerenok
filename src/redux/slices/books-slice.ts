@@ -47,6 +47,13 @@ interface IInitialState {
     loading: boolean,
     error: boolean,
     categoriesCount: TCategories;
+    currentBooks: IBook[],
+    isFailSearchResult: boolean,
+}
+
+interface ISearchAction {
+    category: string,
+    value: string,
 }
 
 const initialState: IInitialState = {
@@ -64,7 +71,9 @@ const initialState: IInitialState = {
         'Дизайн': [],
         'Детские': [],
         'Другое': [],
-    }
+    },
+    currentBooks: [],
+    isFailSearchResult: false,
 }
 
 type TMapCategories = {
@@ -107,18 +116,45 @@ const booksSlice = createSlice({
                 })
             });
         },
-        filterByDescBooks: (state, actions) => {
-            if (actions.payload === 'all') {
-                state.books.sort((a, b) => Number(b.rating) - Number(a.rating))
+        filterByDescBooks: (state) => {
+            state.currentBooks.sort((a, b) => Number(b.rating) - Number(a.rating))
+        },
+        filterByIncrBooks: (state) => {
+            state.currentBooks.sort((a, b) => Number(a.rating) - Number(b.rating))
+        },
+        setCurrentBooks: (state, action) => {
+            if (action.payload === 'all') {
+                state.currentBooks = state.books;
             } else {
-                state.categoriesCount[actions.payload].sort((a, b) => Number(b.rating) - Number(a.rating))
+                state.currentBooks = state.categoriesCount[mapCategories[action.payload]];
             }
         },
-        filterByIncrBooks: (state, actions) => {
-            if (actions.payload === 'all') {
-                state.books.sort((a, b) => Number(a.rating) - Number(b.rating))
+        searchBook: (state, action: PayloadAction<ISearchAction>) => {
+            if (action.payload.category === 'all') {
+
+                if (action.payload.value === '') {
+                    state.currentBooks = state.books;
+                } else {
+                    state.currentBooks = state.books.filter((elem) => elem.title.toLowerCase().indexOf(action.payload.value.toLowerCase()) > -1)
+                }
+
+            } else if (action.payload.value === '') {
+                state.currentBooks = state.categoriesCount[mapCategories[action.payload.category]];
             } else {
-                state.categoriesCount[actions.payload].sort((a, b) => Number(a.rating) - Number(b.rating))
+                state.currentBooks = state.categoriesCount[mapCategories[action.payload.category]].filter((elem) => elem.title.toLowerCase().indexOf(action.payload.value.toLowerCase()) > -1)
+            }
+            if (state.currentBooks.length === 0) {
+                state.isFailSearchResult = true;
+            } else {
+                state.isFailSearchResult = false;
+            }
+        },
+        resetFailSearch: (state, action) => {
+            state.isFailSearchResult = false;
+            if (action.payload === 'all') {
+                state.currentBooks = state.books
+            } else {
+                state.currentBooks = state.categoriesCount[mapCategories[action.payload]];
             }
         }
     },
@@ -142,4 +178,4 @@ const { actions, reducer } = booksSlice;
 
 export const booksReducer = reducer;
 
-export const { setBooks, resestErrorStatusBooks, filterCategories, filterByDescBooks, filterByIncrBooks } = actions;
+export const { setBooks, resestErrorStatusBooks, filterCategories, filterByDescBooks, filterByIncrBooks, setCurrentBooks, searchBook, resetFailSearch } = actions;
