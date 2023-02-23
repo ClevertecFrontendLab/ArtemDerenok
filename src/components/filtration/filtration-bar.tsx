@@ -5,7 +5,13 @@ import { ReactComponent as CloseSvg } from '../../assets/close-icon.svg';
 import { ReactComponent as ListSvg } from '../../assets/list-icon.svg';
 import { ReactComponent as PlatesSvg } from '../../assets/plates.svg';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { resetFailSearch, searchBook } from '../../redux/slices/books-slice';
+import {
+  filterByDescBooks,
+  filterByIncrBooks,
+  resetCurrentBooks,
+  resetFailSearch,
+  searchBook,
+} from '../../redux/slices/books-slice';
 
 import styles from './filtration-bar.module.scss';
 
@@ -63,9 +69,18 @@ export const FiltrationBar = ({
   };
 
   useEffect(() => {
-    setSearchValue('');
-    dispatch(resetFailSearch(categories));
-  }, [categories, dispatch]);
+    if (!searchValue) {
+      dispatch(resetFailSearch(categories));
+      dispatch(resetCurrentBooks(categories));
+      if (sortType === true) {
+        dispatch(filterByDescBooks());
+      } else {
+        dispatch(filterByIncrBooks());
+      }
+    } else {
+      dispatch(searchBook({ category: String(categories), value: searchValue }));
+    }
+  }, [searchValue, dispatch, categories, sortType]);
 
   const showSearch = () => {
     searchRef.current?.classList.add(styles.show);

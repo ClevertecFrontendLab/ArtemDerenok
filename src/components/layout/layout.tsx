@@ -55,7 +55,6 @@ export const Layout = () => {
           <Routes>
             <Route path='/' element={<Navigate to='/books/all' />} />
             <Route path='/books/:categories' element={<MainPage />} />
-            <Route path='/books/all/:bookId' element={<BookPage />} />
             <Route path='/books/:categories/:bookId' element={<BookPage />} />
             <Route path='contract' element={<Terms content='contract' />} />
             <Route path='rules' element={<Terms content='rules' />} />

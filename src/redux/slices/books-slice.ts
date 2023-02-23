@@ -131,18 +131,12 @@ const booksSlice = createSlice({
         },
         searchBook: (state, action: PayloadAction<ISearchAction>) => {
             if (action.payload.category === 'all') {
+                state.currentBooks = state.books.filter((elem) => elem.title.toLowerCase().indexOf(action.payload.value.toLowerCase()) > -1)
 
-                if (action.payload.value === '') {
-                    state.currentBooks = state.books;
-                } else {
-                    state.currentBooks = state.books.filter((elem) => elem.title.toLowerCase().indexOf(action.payload.value.toLowerCase()) > -1)
-                }
-
-            } else if (action.payload.value === '') {
-                state.currentBooks = state.categoriesCount[mapCategories[action.payload.category]];
             } else {
                 state.currentBooks = state.categoriesCount[mapCategories[action.payload.category]].filter((elem) => elem.title.toLowerCase().indexOf(action.payload.value.toLowerCase()) > -1)
             }
+
             if (state.currentBooks.length === 0) {
                 state.isFailSearchResult = true;
             } else {
@@ -151,6 +145,13 @@ const booksSlice = createSlice({
         },
         resetFailSearch: (state, action) => {
             state.isFailSearchResult = false;
+            if (action.payload === 'all') {
+                state.currentBooks = state.books
+            } else {
+                state.currentBooks = state.categoriesCount[mapCategories[action.payload]];
+            }
+        },
+        resetCurrentBooks: (state, action) => {
             if (action.payload === 'all') {
                 state.currentBooks = state.books
             } else {
@@ -178,4 +179,4 @@ const { actions, reducer } = booksSlice;
 
 export const booksReducer = reducer;
 
-export const { setBooks, resestErrorStatusBooks, filterCategories, filterByDescBooks, filterByIncrBooks, setCurrentBooks, searchBook, resetFailSearch } = actions;
+export const { setBooks, resestErrorStatusBooks, filterCategories, filterByDescBooks, filterByIncrBooks, setCurrentBooks, searchBook, resetFailSearch, resetCurrentBooks } = actions;
