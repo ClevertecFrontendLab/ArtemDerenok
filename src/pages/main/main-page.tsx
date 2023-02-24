@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
@@ -7,7 +7,7 @@ import { FiltrationBar } from '../../components/filtration/filtration-bar';
 import { Menu } from '../../components/menu/menu';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useTypeSelector } from '../../hooks/use-type-selector';
-import { filterByDescBooks, filterByIncrBooks, setCurrentBooks } from '../../redux/slices/books-slice';
+import { filterByDescBooks, filterByIncrBooks, searchBook, setCurrentBooks } from '../../redux/slices/books-slice';
 
 import styles from './main-page.module.scss';
 
@@ -15,12 +15,18 @@ export const MainPage = () => {
   const [isPlate, setIsPlate] = useState(true);
   const [isList, setIsList] = useState(false);
   const [sortType, setSortType] = useState(true);
+  const [searchValue, setSearchValue] = useState('');
 
   const dispatch = useAppDispatch();
 
   const { categories } = useParams();
 
   const { currentBooks, isFailSearchResult } = useTypeSelector((state) => state.booksReducer);
+
+  const handleSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+    dispatch(searchBook({ category: String(categories), value: searchValue }));
+  };
 
   const handleTypeSort = () => setSortType(!sortType);
 
@@ -56,6 +62,8 @@ export const MainPage = () => {
           changeIsList={changeIsList}
           sortType={sortType}
           handleTypeSort={handleTypeSort}
+          searchValue={searchValue}
+          handleSearchValue={handleSearchValue}
         />
         <div className={styles.mainPage_plate}>
           {isFailSearchResult === false ? (
@@ -75,6 +83,7 @@ export const MainPage = () => {
                   delivery={elem.delivery}
                   id={elem.id}
                   isList={isList}
+                  searchValue={searchValue}
                 />
               ))
             )

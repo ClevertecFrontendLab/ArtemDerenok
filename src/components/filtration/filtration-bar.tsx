@@ -22,6 +22,8 @@ interface IFiltrationBar {
   changeIsList: () => void;
   sortType: boolean;
   handleTypeSort: () => void;
+  searchValue: string;
+  handleSearchValue: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 function getWindowSize() {
@@ -37,13 +39,14 @@ export const FiltrationBar = ({
   changeIsList,
   sortType,
   handleTypeSort,
+  searchValue,
+  handleSearchValue,
 }: IFiltrationBar) => {
   const filterRef = useRef<HTMLDivElement>(null);
   const btnsRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const crossRef = useRef<HTMLButtonElement>(null);
   const searchOpenRef = useRef<HTMLButtonElement>(null);
-  const [searchValue, setSearchValue] = useState('');
 
   const { categories } = useParams();
 
@@ -62,11 +65,6 @@ export const FiltrationBar = ({
   }, []);
 
   const dispatch = useAppDispatch();
-
-  const handleSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-    dispatch(searchBook({ category: String(categories), value: searchValue }));
-  };
 
   useEffect(() => {
     if (!searchValue) {

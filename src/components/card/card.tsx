@@ -1,8 +1,10 @@
 import React from 'react';
+import Highlighter from 'react-highlight-words';
 import { Link } from 'react-router-dom';
 
 import otherImg from '../../assets/icon_other.png';
 import { BookingBtn } from '../booking-btn/booking-btn';
+import { Highlight } from '../highlight/higlight';
 import { Rating } from '../rating/rating';
 
 import styles from './card.module.scss';
@@ -31,9 +33,10 @@ interface ICard {
   };
   id: number;
   isList: boolean;
+  searchValue: string;
 }
 
-export const Card = ({ name, images, rating, author, booking, delivery, id, isList }: ICard) => (
+export const Card = ({ name, images, rating, author, booking, delivery, id, isList, searchValue }: ICard) => (
   <div className={`${styles.card} ${isList ? styles.list : null}`} data-test-id='card'>
     <Link className={`${isList ? styles.linkList : styles.link}`} to={`${id}`}>
       <div className={`${isList ? styles.listImgContainer : styles.card_imgContainer}`}>
@@ -46,7 +49,15 @@ export const Card = ({ name, images, rating, author, booking, delivery, id, isLi
       {isList ? (
         <div className={styles.descriptionContainer}>
           <div>
-            <h2 className={styles.name}>{name}</h2>
+            <h2 className={styles.name}>
+              <Highlighter
+                highlightClassName={styles.highlight}
+                searchWords={[searchValue]}
+                autoEscape={true}
+                textToHighlight={name}
+                highlightTag={Highlight}
+              />
+            </h2>
             <p className={styles.author}>{author.join(', ')}</p>
           </div>
           <div className={styles.ratingContainer}>
@@ -56,7 +67,15 @@ export const Card = ({ name, images, rating, author, booking, delivery, id, isLi
       ) : (
         <React.Fragment>
           <Rating rating={rating} />
-          <h2 className={styles.card_name}>{name}</h2>
+          <h2 className={styles.card_name}>
+            <Highlighter
+              highlightClassName={styles.highlight}
+              searchWords={[searchValue]}
+              autoEscape={true}
+              textToHighlight={name}
+              highlightTag={Highlight}
+            />
+          </h2>
           <p className={styles.card_author}>{author.join('\n')}</p>
           <BookingBtn booking={booking} delivery={delivery} />
         </React.Fragment>
