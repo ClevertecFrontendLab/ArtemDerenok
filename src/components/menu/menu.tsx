@@ -43,6 +43,10 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
     }
   }, [categories.length, dispatch]);
 
+  useEffect(() => {
+    handleMenu();
+  }, []);
+
   return (
     <ul className={styles.menu}>
       <li className={styles.menu_firstLink}>
