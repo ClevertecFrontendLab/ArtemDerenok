@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
 import { ReactComponent as DownArrow } from '../../assets/down-arrow.svg';
@@ -20,6 +20,7 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
   const downArrow = useRef<SVGSVGElement>(null);
   const upArrow = useRef<SVGSVGElement>(null);
   const categories = useTypeSelector((state) => state.categoriesReducer.categories);
+  const categoriesCount = useTypeSelector((state) => state.booksReducer.categoriesCount);
   const dispatch = useAppDispatch();
 
   const handleMenu = () => {
@@ -36,11 +37,17 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
     }
   };
 
+  const url = useParams();
+
   useEffect(() => {
     if (categories.length === 0) {
       dispatch(getCategoriesThunk());
     }
   }, [categories.length, dispatch]);
+
+  useEffect(() => {
+    handleMenu();
+  }, []);
 
   return (
     <ul className={styles.menu}>
@@ -48,17 +55,17 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
         <NavLink
           data-test-id={isBurger === false ? 'navigation-showcase' : 'burger-showcase'}
           onClick={handleMenu}
-          to='/books/all'
+          to={`/books/${url.categories}`}
           className={styles.bookShowcase}
         >
           {({ isActive }) => (
             <div>
               <span className={isActive ? styles.active : undefined}>Витрина книг</span>
-              <DownArrow ref={downArrow} className={isActive ? styles.arrowsActive : styles.arrowUsual} />
-              <UpArrow
-                ref={upArrow}
+              <DownArrow
+                ref={downArrow}
                 className={`${styles.hide} ${isActive ? styles.arrowsActive : styles.arrowUsual}`}
               />
+              <UpArrow ref={upArrow} className={isActive ? styles.arrowsActive : styles.arrowUsual} />
             </div>
           )}
         </NavLink>
@@ -75,9 +82,21 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
         </li>
         {categories.map((elem) => (
           <li key={nanoid()} className={styles.secondMenu_link}>
-            <NavLink onClick={showMobileMenu} to={`/books/${elem.path}`}>
+            <NavLink
+              onClick={showMobileMenu}
+              to={`/books/${elem.path}`}
+              data-test-id={isBurger === false ? `navigation-${elem.path}` : `burger-${elem.path}`}
+            >
               {({ isActive }) => <span className={isActive ? styles.active : undefined}>{elem.name}</span>}
             </NavLink>{' '}
+            <span
+              data-test-id={
+                isBurger === false ? `navigation-book-count-for-${elem.path}` : `burger-book-count-for-${elem.path}`
+              }
+              className={styles.secondMenu_countBooksLabel}
+            >
+              {categoriesCount[elem.name].length}
+            </span>
           </li>
         ))}
       </ul>

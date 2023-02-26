@@ -38,23 +38,66 @@ interface IBook {
     histories: null | IHistories[]
 }
 
+type TCategories = {
+    [key: string]: IBook[]
+}
+
 interface IInitialState {
     books: IBook[],
     loading: boolean,
     error: boolean,
+    categoriesCount: TCategories;
+    currentBooks: IBook[],
+    isFailSearchResult: boolean,
+}
+
+interface ISearchAction {
+    category: string,
+    value: string,
 }
 
 const initialState: IInitialState = {
     books: [],
     loading: false,
     error: false,
+    categoriesCount: {
+        'Бизнес': [],
+        'Психология': [],
+        'Родителям': [],
+        'Нон-фикшн': [],
+        'Художественная литература': [],
+        'Программирование': [],
+        'Хобби': [],
+        'Дизайн': [],
+        'Детские': [],
+        'Другое': [],
+    },
+    currentBooks: [],
+    isFailSearchResult: false,
 }
+
+type TMapCategories = {
+    [key: string]: string;
+};
+
+export const mapCategories: TMapCategories = {
+    all: 'all',
+    business: 'Бизнес',
+    psychology: 'Психология',
+    parents: 'Родителям',
+    'non-fiction': 'Нон-фикшн',
+    fiction: 'Художественная литература',
+    programming: 'Программирование',
+    hobby: 'Хобби',
+    design: 'Дизайн',
+    childish: 'Детские',
+    other: 'Другое',
+};
 
 export const getBooksThunk = createAsyncThunk(
     'books/getBooks',
     () => getAllBooks()
 )
-
 
 const booksSlice = createSlice({
     name: 'books',
@@ -65,6 +108,55 @@ const booksSlice = createSlice({
         },
         resestErrorStatusBooks: (state) => {
             state.error = false;
+        },
+        filterCategories: (state) => {
+            state.books.forEach((elem1) => {
+                elem1.categories.forEach((elem2) => {
+                    state.categoriesCount[elem2].push(elem1);
+                })
+            });
+        },
+        filterByDescBooks: (state) => {
+            state.currentBooks.sort((a, b) => Number(b.rating) - Number(a.rating))
+        },
+        filterByIncrBooks: (state) => {
+            state.currentBooks.sort((a, b) => Number(a.rating) - Number(b.rating))
+        },
+        setCurrentBooks: (state, action) => {
+            if (action.payload === 'all') {
+                state.currentBooks = state.books;
+            } else {
+                state.currentBooks = state.categoriesCount[mapCategories[action.payload]];
+            }
+        },
+        searchBook: (state, action: PayloadAction<ISearchAction>) => {
+            if (action.payload.category === 'all') {
+                state.currentBooks = state.books.filter((elem) => elem.title.toLowerCase().indexOf(action.payload.value.toLowerCase()) > -1)
+
+            } else {
+                state.currentBooks = state.categoriesCount[mapCategories[action.payload.category]].filter((elem) => elem.title.toLowerCase().indexOf(action.payload.value.toLowerCase()) > -1)
+            }
+
+            if (state.currentBooks.length === 0) {
+                state.isFailSearchResult = true;
+            } else {
+                state.isFailSearchResult = false;
+            }
+        },
+        resetFailSearch: (state, action) => {
+            state.isFailSearchResult = false;
+            if (action.payload === 'all') {
+                state.currentBooks = state.books
+            } else {
+                state.currentBooks = state.categoriesCount[mapCategories[action.payload]];
+            }
+        },
+        resetCurrentBooks: (state, action) => {
+            if (action.payload === 'all') {
+                state.currentBooks = state.books
+            } else {
+                state.currentBooks = state.categoriesCount[mapCategories[action.payload]];
+            }
         }
     },
     extraReducers: (builder) => {
@@ -87,4 +179,4 @@ const { actions, reducer } = booksSlice;
 
 export const booksReducer = reducer;
 
-export const { setBooks, resestErrorStatusBooks } = actions;
+export const { setBooks, resestErrorStatusBooks, filterCategories, filterByDescBooks, filterByIncrBooks, setCurrentBooks, searchBook, resetFailSearch, resetCurrentBooks } = actions;

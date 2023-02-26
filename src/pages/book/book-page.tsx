@@ -1,6 +1,6 @@
 /* eslint-disable no-negated-condition */
 import React, { useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
 import downImg from '../../assets/down.png';
@@ -15,6 +15,13 @@ import books from '../../data/books.json';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useTypeSelector } from '../../hooks/use-type-selector';
 import { getBookThunk } from '../../redux/slices/book-slice';
+import {
+  filterByDescBooks,
+  filterCategories,
+  getBooksThunk,
+  mapCategories,
+  setCurrentBooks,
+} from '../../redux/slices/books-slice';
 
 import styles from './book-page.module.scss';
 
@@ -27,6 +34,8 @@ export const BookPage = () => {
   const data = books.find((elem) => elem.id === Number(bookId));
 
   const bookData = useTypeSelector((state) => state.bookReducer.book);
+
+  const { categories } = useParams();
 
   const dispatch = useAppDispatch();
 
@@ -46,12 +55,23 @@ export const BookPage = () => {
     reviewsRef.current?.classList.toggle(styles.hideReview);
   };
 
+  const updateData = () => {
+    dispatch(getBooksThunk()).then(() => {
+      dispatch(filterCategories());
+      dispatch(setCurrentBooks(categories));
+      dispatch(filterByDescBooks());
+    });
+  };
+
   const result =
     bookData !== null ? (
       <section className={styles.bookPage}>
         <div className={styles.bookPage_rout}>
           <p>
-            {bookData?.categories[0]} / {bookData?.title}
+            <NavLink onClick={updateData} data-test-id='breadcrumbs-link' to={`/books/${categories}`}>
+              {categories === 'all' ? 'Все книги' : mapCategories[String(categories)]}
+            </NavLink>{' '}
+            / <span data-test-id='book-name'>{bookData?.title}</span>
           </p>
         </div>
         <div className={styles.bookPage_containerDescription}>
@@ -70,7 +90,7 @@ export const BookPage = () => {
             )}
           </div>
           <div>
-            <h2>{bookData?.title}</h2>
+            <h2 data-test-id='book-title'>{bookData?.title}</h2>
             <p className={styles.author}>{data?.author}</p>
             <BookingBtn booking={bookData?.booking} delivery={bookData?.delivery} />
             <h4>О книге</h4>
