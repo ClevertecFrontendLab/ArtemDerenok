@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
 import { ReactComponent as DownArrow } from '../../assets/down-arrow.svg';
@@ -37,6 +37,8 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
     }
   };
 
+  const url = useParams();
+
   useEffect(() => {
     if (categories.length === 0) {
       dispatch(getCategoriesThunk());
@@ -53,17 +55,17 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
         <NavLink
           data-test-id={isBurger === false ? 'navigation-showcase' : 'burger-showcase'}
           onClick={handleMenu}
-          to='/books/all'
+          to={`/books/${url.categories}`}
           className={styles.bookShowcase}
         >
           {({ isActive }) => (
             <div>
               <span className={isActive ? styles.active : undefined}>Витрина книг</span>
-              <DownArrow ref={downArrow} className={isActive ? styles.arrowsActive : styles.arrowUsual} />
-              <UpArrow
-                ref={upArrow}
+              <DownArrow
+                ref={downArrow}
                 className={`${styles.hide} ${isActive ? styles.arrowsActive : styles.arrowUsual}`}
               />
+              <UpArrow ref={upArrow} className={isActive ? styles.arrowsActive : styles.arrowUsual} />
             </div>
           )}
         </NavLink>

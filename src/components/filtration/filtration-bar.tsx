@@ -101,7 +101,7 @@ export const FiltrationBar = ({
     <div className={styles.filtrationBar}>
       <input
         data-test-id={windowSize.innerWidth > 767 ? 'input-search' : null}
-        type='search'
+        type='text'
         placeholder='Поиск книги или автора…'
         className={styles.filtrationBar_search}
         value={searchValue}
