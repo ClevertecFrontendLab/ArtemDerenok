@@ -33,7 +33,7 @@
     flex-direction: column;
     background: $main_white;
     border-radius: 16px;
-    gap: 32px;
+    gap: 27px;
 
     &_forgottenPass {
       font-family: $font_main;
@@ -46,15 +46,23 @@
       padding-left: 12px;
     }
 
+    &_firstInputContainer {
+      height: 76px;
+    }
+
+    &_secondInputContainer {
+      height: 76px;
+    }
+
     input {
       all: unset;
       background: $white_gray;
       border-radius: 4px 4px 0 0;
-      border-bottom: 2px solid $border_gray;
       width: 416px;
       height: 56px;
       padding-left: 12px;
       position: relative;
+      box-sizing: border-box;
 
       &::placeholder {
         font-family: $font_main;
@@ -67,10 +75,15 @@
       }
 
       &:focus {
-        padding-top: 15px;
+        padding-top: 6px;
         &::placeholder {
           position: absolute;
           top: 5px;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 16px;
+          letter-spacing: 0.2px;
+          color: $gray_light;
         }
       }
     }
@@ -152,4 +165,9 @@
       }
     }
   }
+}
+
+.error {
+  color: $border_red;
+  border-top: 2px solid $border_red;
 }
