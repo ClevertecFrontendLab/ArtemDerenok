@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useTypeSelector } from '../../hooks/use-type-selector';
 import { BookPage } from '../../pages/book/book-page';
 import { MainPage } from '../../pages/main/main-page';
+import { RegisterPage } from '../../pages/register/register-page';
 import { Terms } from '../../pages/terms/terms';
 import { resetErrorStatusBook } from '../../redux/slices/book-slice';
 import {
@@ -53,7 +54,7 @@ export const Layout = () => {
         <Header />
         <div className={styles.container_content}>
           <Routes>
-            <Route path='/' element={<Navigate to='/books/all' />} />
+            <Route path='/' element={<RegisterPage />} />
             <Route path='/books/:categories' element={<MainPage />} />
             <Route path='/books/:categories/:bookId' element={<BookPage />} />
             <Route path='contract' element={<Terms content='contract' />} />

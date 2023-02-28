@@ -1,0 +1,36 @@
+@import '../../variables';
+
+.button {
+  all: unset;
+  text-transform: uppercase;
+  width: 416px;
+  height: 52px;
+  background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+  border-radius: 30px;
+  color: $main_white;
+  font-family: $font_main;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.2px;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    background: $link_hover;
+  }
+
+  &:active {
+    background: $link_active;
+  }
+}
+
+@media (min-width: $breakpoint-mobile-min) and (max-width: 545px) {
+  .button {
+    width: 255px;
+    height: 40px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
