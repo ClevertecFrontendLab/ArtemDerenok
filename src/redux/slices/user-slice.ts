@@ -1,12 +1,13 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 interface IInitialState {
     loading: boolean,
     error: boolean,
+    error400: boolean,
 }
 
-const initialState = {
+const initialState: IInitialState = {
     loading: false,
     error: false,
     error400: false,

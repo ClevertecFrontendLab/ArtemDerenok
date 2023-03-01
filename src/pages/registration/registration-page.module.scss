@@ -35,15 +35,14 @@
     border-radius: 16px;
     gap: 27px;
 
-    &_forgottenPass {
+    &_step {
       font-family: $font_main;
       font-style: normal;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 16px;
-      letter-spacing: 0.2px;
-      color: $gray_light;
-      padding-left: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 18px;
+      letter-spacing: 0.1px;
+      color: $main_dark;
     }
 
     &_firstInputContainer {
@@ -88,6 +87,17 @@
       }
     }
 
+    &_inputLabel {
+      font-family: $font_main;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 16px;
+      letter-spacing: 0.2px;
+      color: $gray_light;
+      padding-left: 12px;
+    }
+
     h4 {
       font-family: $font_main;
       font-style: normal;
@@ -98,7 +108,7 @@
       color: $main_dark;
     }
 
-    &_registerContainer {
+    &_loginContainer {
       display: flex;
       gap: 16px;
       p {
@@ -111,7 +121,7 @@
         color: $gray_medium;
       }
 
-      button {
+      a {
         all: unset;
         cursor: pointer;
         font-family: $font_main;
@@ -130,6 +140,32 @@
   }
 }
 
+.button {
+  all: unset;
+  text-transform: uppercase;
+  width: 416px;
+  height: 52px;
+  background: linear-gradient(231.58deg, #f83600 -53.35%, #f9d423 297.76%);
+  border-radius: 30px;
+  color: $main_white;
+  font-family: $font_main;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.2px;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    background: $link_hover;
+  }
+
+  &:active {
+    background: $link_active;
+  }
+}
+
 @media (min-width: $breakpoint-mobile-min) and (max-width: 545px) {
   .formContainer {
     &_heading {
@@ -144,6 +180,11 @@
       height: 456px;
       padding: 24px 16px;
       align-items: center;
+
+      &_headingContainer {
+        align-self: baseline;
+      }
+
       &_forgottenPass {
         padding-left: 0;
         align-self: baseline;
@@ -154,7 +195,7 @@
         height: 56px;
       }
 
-      &_registerContainer {
+      &_loginContainer {
         flex-direction: column;
         gap: 7px;
         align-self: baseline;
@@ -164,6 +205,13 @@
         }
       }
     }
+  }
+
+  .button {
+    width: 255px;
+    height: 40px;
+    font-size: 12px;
+    line-height: 18px;
   }
 }
 

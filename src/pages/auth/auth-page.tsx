@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { NavLink } from 'react-router-dom';
 import { AxiosError } from 'axios';
 
 import { getLogin } from '../../api/authorisation';
@@ -16,9 +17,9 @@ import {
   setLoadingStatus,
 } from '../../redux/slices/user-slice';
 
-import styles from './register-page.module.scss';
+import styles from './auth-page.module.scss';
 
-export const RegisterPage = () => {
+export const AuthPage = () => {
   const {
     register,
     handleSubmit,
@@ -80,9 +81,9 @@ export const RegisterPage = () => {
             <Button type='submit' text='Войти' />
             <div className={styles.formContainer_form_registerContainer}>
               <p>Нет учётной записи?</p>
-              <button type='button'>
+              <NavLink to='/registration'>
                 Регистрация <img src={arrowImg} alt='register' />
-              </button>
+              </NavLink>
             </div>
           </form>
         )}

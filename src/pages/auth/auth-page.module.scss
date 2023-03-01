@@ -1,0 +1,173 @@
+@import '../../variables';
+
+.container {
+  background-color: $main_orange;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer {
+  &_heading {
+    font-family: $font_main;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    color: $main_white;
+    text-align: center;
+    padding-bottom: 59px;
+  }
+
+  &_form {
+    width: 528px;
+    height: 466px;
+    padding: 48px 56px;
+    display: flex;
+    flex-direction: column;
+    background: $main_white;
+    border-radius: 16px;
+    gap: 27px;
+
+    &_forgottenPass {
+      font-family: $font_main;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 16px;
+      letter-spacing: 0.2px;
+      color: $gray_light;
+      padding-left: 12px;
+    }
+
+    &_firstInputContainer {
+      height: 76px;
+    }
+
+    &_secondInputContainer {
+      height: 76px;
+    }
+
+    input {
+      all: unset;
+      background: $white_gray;
+      border-radius: 4px 4px 0 0;
+      width: 416px;
+      height: 56px;
+      padding-left: 12px;
+      position: relative;
+      box-sizing: border-box;
+
+      &::placeholder {
+        font-family: $font_main;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: 0.1px;
+        color: $main_dark;
+      }
+
+      &:focus {
+        padding-top: 6px;
+        &::placeholder {
+          position: absolute;
+          top: 5px;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 16px;
+          letter-spacing: 0.2px;
+          color: $gray_light;
+        }
+      }
+    }
+
+    h4 {
+      font-family: $font_main;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 30px;
+      letter-spacing: 0.1px;
+      color: $main_dark;
+    }
+
+    &_registerContainer {
+      display: flex;
+      gap: 16px;
+      p {
+        font-family: $font_main;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.1px;
+        color: $gray_medium;
+      }
+
+      a {
+        all: unset;
+        cursor: pointer;
+        font-family: $font_main;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 18px;
+        letter-spacing: 0.2px;
+        text-transform: uppercase;
+        color: $main_dark;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+    }
+  }
+}
+
+@media (min-width: $breakpoint-mobile-min) and (max-width: 545px) {
+  .formContainer {
+    &_heading {
+      font-size: 18px;
+      line-height: 28px;
+      padding-bottom: 12px;
+      align-self: baseline;
+    }
+
+    &_form {
+      width: 288px;
+      height: 456px;
+      padding: 24px 16px;
+      align-items: center;
+      &_forgottenPass {
+        padding-left: 0;
+        align-self: baseline;
+      }
+
+      input {
+        width: 256px;
+        height: 56px;
+      }
+
+      &_registerContainer {
+        flex-direction: column;
+        gap: 7px;
+        align-self: baseline;
+        p {
+          font-size: 15px;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+}
+
+.error {
+  color: $border_red;
+  border-top: 2px solid $border_red;
+}

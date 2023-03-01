@@ -3,9 +3,10 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useTypeSelector } from '../../hooks/use-type-selector';
+import { AuthPage } from '../../pages/auth/auth-page';
 import { BookPage } from '../../pages/book/book-page';
 import { MainPage } from '../../pages/main/main-page';
-import { RegisterPage } from '../../pages/register/register-page';
+import { RegistrationPage } from '../../pages/registration/registration-page';
 import { Terms } from '../../pages/terms/terms';
 import { resetErrorStatusBook } from '../../redux/slices/book-slice';
 import {
@@ -55,7 +56,9 @@ export const Layout = () => {
         <Header />
         <div className={styles.container_content}>
           <Routes>
-            <Route path='/' element={<RegisterPage />} />
+            <Route path='/' element={<Navigate to='registration' />} />
+            <Route path='/auth' element={<AuthPage />} />
+            <Route path='/registration' element={<RegistrationPage />} />
             <Route path='/books/:categories' element={<MainPage />} />
             <Route path='/books/:categories/:bookId' element={<BookPage />} />
             <Route path='contract' element={<Terms content='contract' />} />
