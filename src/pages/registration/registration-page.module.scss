@@ -96,6 +96,7 @@
       letter-spacing: 0.2px;
       color: $gray_light;
       padding-left: 12px;
+      border-top: 2px solid $gray_light;
     }
 
     h4 {
@@ -218,4 +219,13 @@
 .error {
   color: $border_red;
   border-top: 2px solid $border_red;
+}
+
+.errorBorder {
+  border-top: 2px solid $border_red;
+}
+
+.errorColor {
+  color: $border_red;
+  background-color: transparent;
 }
