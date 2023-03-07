@@ -29,6 +29,7 @@ export const Layout = () => {
   const books = useTypeSelector((state) => state.booksReducer);
   const book = useTypeSelector((state) => state.bookReducer);
   const user = useTypeSelector((state) => state.userReducer);
+  const registration = useTypeSelector((state) => state.registrationReducer);
 
   const dispatch = useAppDispatch();
 
@@ -48,7 +49,7 @@ export const Layout = () => {
 
   return (
     <React.Fragment>
-      {categories.loading || book.loading || books.loading || user.loading ? <Spinner /> : null}
+      {categories.loading || book.loading || books.loading || user.loading || registration.loading ? <Spinner /> : null}
       <div className={styles.container}>
         {categories.error || book.error || books.error ? (
           <Error handleShowErrorMessage={handleShowErrorMessage} />
