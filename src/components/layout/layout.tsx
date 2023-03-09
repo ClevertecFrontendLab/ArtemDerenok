@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useTypeSelector } from '../../hooks/use-type-selector';
 import { AuthPage } from '../../pages/auth/auth-page';
 import { BookPage } from '../../pages/book/book-page';
+import { ForgotPage } from '../../pages/forgot/forgot-page';
 import { MainPage } from '../../pages/main/main-page';
 import { RegistrationPage } from '../../pages/registration/registration-page';
 import { Terms } from '../../pages/terms/terms';
@@ -30,6 +31,7 @@ export const Layout = () => {
   const book = useTypeSelector((state) => state.bookReducer);
   const user = useTypeSelector((state) => state.userReducer);
   const registration = useTypeSelector((state) => state.registrationReducer);
+  const forgot = useTypeSelector((state) => state.forgotReducer);
 
   const dispatch = useAppDispatch();
 
@@ -49,7 +51,9 @@ export const Layout = () => {
 
   return (
     <React.Fragment>
-      {categories.loading || book.loading || books.loading || user.loading || registration.loading ? <Spinner /> : null}
+      {categories.loading || book.loading || books.loading || user.loading || registration.loading || forgot.loading ? (
+        <Spinner />
+      ) : null}
       <div className={styles.container}>
         {categories.error || book.error || books.error ? (
           <Error handleShowErrorMessage={handleShowErrorMessage} />
@@ -57,9 +61,10 @@ export const Layout = () => {
         <Header />
         <div className={styles.container_content}>
           <Routes>
-            <Route path='/' element={<Navigate to='registration' />} />
+            <Route path='/' element={<Navigate to='forgot-pass' />} />
             <Route path='/auth' element={<AuthPage />} />
             <Route path='/registration' element={<RegistrationPage />} />
+            <Route path='/forgot-pass' element={<ForgotPage />} />
             <Route path='/books/:categories' element={<MainPage />} />
             <Route path='/books/:categories/:bookId' element={<BookPage />} />
             <Route path='contract' element={<Terms content='contract' />} />

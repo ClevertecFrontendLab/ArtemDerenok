@@ -1,0 +1,245 @@
+@import '../../variables';
+
+.container {
+  background-color: $main_orange;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer {
+  &_heading {
+    font-family: $font_main;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    color: $main_white;
+    text-align: center;
+    padding-bottom: 59px;
+  }
+
+  &_form {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 0px 48px;
+    gap: 15px;
+    width: 528px;
+    height: 422px;
+    background: $main_white;
+    border-radius: 16px;
+
+    &_registration {
+      padding: 20px 0px 20px 16px;
+      background-color: $white_gray;
+      border-radius: 16px 16px 0 0;
+      a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+    }
+
+    &_formContent {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      padding-left: 56px;
+      padding-right: 56px;
+
+      h4 {
+        font-family: $font_main;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 30px;
+        letter-spacing: 0.1px;
+        color: $main_dark;
+      }
+
+      &_loginContainer {
+        display: flex;
+        gap: 16px;
+        p {
+          font-family: $font_main;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          letter-spacing: 0.1px;
+          color: $gray_medium;
+          text-align: center;
+        }
+
+        a {
+          all: unset;
+          cursor: pointer;
+          font-family: $font_main;
+          font-style: normal;
+          font-weight: 600;
+          font-size: 12px;
+          line-height: 18px;
+          letter-spacing: 0.2px;
+          text-transform: uppercase;
+          color: $main_dark;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+      }
+
+      &_inputLabel {
+        font-family: $font_main;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.2px;
+        color: $gray_light;
+        padding-left: 12px;
+        border-top: 2px solid $gray_light;
+      }
+
+      input {
+        all: unset;
+        background: $white_gray;
+        border-radius: 4px 4px 0 0;
+        width: 416px;
+        height: 56px;
+        padding-left: 12px;
+        position: relative;
+        box-sizing: border-box;
+
+        &::placeholder {
+          font-family: $font_main;
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 18px;
+          letter-spacing: 0.1px;
+          color: $main_dark;
+        }
+
+        &:focus {
+          padding-top: 6px;
+          &::placeholder {
+            position: absolute;
+            top: 5px;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 16px;
+            letter-spacing: 0.2px;
+            color: $gray_light;
+          }
+        }
+      }
+    }
+  }
+}
+
+.error {
+  color: $border_red;
+}
+
+.errorBorder {
+  border-top: 2px solid $border_red;
+}
+
+.receivedLetterContainer {
+  background-color: $main_white;
+  width: 600px;
+  height: 206px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 32px;
+  gap: 32px;
+
+  h4 {
+    font-family: $font_main;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+    letter-spacing: 0.1px;
+    color: $main_dark;
+  }
+
+  p {
+    font-family: $font_main;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    color: $main_dark;
+    text-align: center;
+  }
+}
+
+@media (min-width: $breakpoint-mobile-min) and (max-width: 545px) {
+  .formContainer {
+    &_heading {
+      font-family: $font_main;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 40px;
+      color: $main_white;
+      text-align: center;
+      padding-bottom: 59px;
+    }
+
+    &_form {
+      width: 288px;
+      height: 458px;
+
+      &_formContent {
+        gap: 20px;
+        padding-left: 16px;
+        padding-right: 16px;
+
+        &_loginContainer {
+          display: flex;
+          flex-direction: column;
+          gap: 0px;
+          align-items: baseline;
+        }
+
+        &_inputLabel {
+          font-size: 12px;
+          line-height: 16px;
+        }
+
+        input {
+          width: 256px;
+        }
+      }
+    }
+  }
+
+  .receivedLetterContainer {
+    width: 288px;
+    height: 186px;
+    padding: 42px 16px 32px;
+    gap: 24px;
+
+    h4 {
+      font-size: 18px;
+      line-height: 28px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 20px;
+    }
+  }
+}

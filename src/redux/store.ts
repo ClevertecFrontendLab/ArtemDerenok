@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { bookReducer } from './slices/book-slice';
 import { booksReducer } from './slices/books-slice';
 import { categoriesReducer } from './slices/categories-slice';
+import { forgotReducer } from './slices/forgot-slice';
 import { registrationReducer } from './slices/registration-slice';
 import { userReducer } from './slices/user-slice';
 
@@ -13,7 +14,8 @@ export const store = configureStore({
         categoriesReducer,
         bookReducer,
         userReducer,
-        registrationReducer
+        registrationReducer,
+        forgotReducer
     },
     devTools: process.env.NODE_ENV !== 'production',
 })
