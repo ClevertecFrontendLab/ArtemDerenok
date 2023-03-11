@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
@@ -18,6 +18,7 @@ import {
 } from '../../redux/slices/forgot-slice';
 
 import styles from './forgot-page.module.scss';
+import { ResetPassForm } from '../../components/reset-pass-form/reset-pass-form';
 
 const schema = yup
   .object({
@@ -33,6 +34,16 @@ export const ForgotPage = () => {
   } = useForm({ resolver: yupResolver(schema), mode: 'all' });
   const forgot = useTypeSelector((state) => state.forgotReducer);
   const [isLetterReceived, setLetterReceived] = useState(false);
+  const [isLetterResetForm, setLetterResetForm] = useState(false);
+  const [code, setCode] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    setCode(searchParams.get('code'));
+    if (code) {
+      setLetterResetForm(true);
+    }
+  }, [code, searchParams]);
 
   const dispatch = useAppDispatch();
 
@@ -61,6 +72,8 @@ export const ForgotPage = () => {
             <h4>Письмо выслано</h4>
             <p>Перейдите в вашу почту, чтобы воспользоваться подсказками по восстановлению пароля</p>
           </div>
+        ) : isLetterResetForm ? (
+          <ResetPassForm code={code} />
         ) : (
           <form className={styles.formContainer_form} onSubmit={handleSubmit(onSubmit)}>
             <div className={styles.formContainer_form_registration}>

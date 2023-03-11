@@ -20,3 +20,10 @@ export const resetPassword = async (body: any) => {
 
     return data;
 }
+
+export const sendNewPassword = async (body: any) => {
+    const response = await axiosInstance.post('/api/auth/reset-password', body)
+    const data = await response.data;
+
+    return data;
+}
