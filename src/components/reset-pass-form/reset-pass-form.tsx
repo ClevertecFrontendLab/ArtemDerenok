@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { useForm } from 'react-hook-form';
+import { NavLink } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
@@ -44,7 +45,6 @@ export const ResetPassForm = ({ code }: IResetPassForm) => {
     handleSubmit,
     setError,
     trigger,
-    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema), mode: 'all' });
   const forgot = useTypeSelector((state) => state.forgotReducer);
@@ -53,21 +53,16 @@ export const ResetPassForm = ({ code }: IResetPassForm) => {
 
   const onSubmit = async (data: any) => {
     if (data.password === data.passwordConfirmation) {
-      console.log('ok');
-
       const body = { ...data, code };
 
       dispatch(setLoadingStatusForgot());
       dispatch(resetErrorForgot());
 
       try {
-        const result = await sendNewPassword(body);
+        await sendNewPassword(body);
 
-        if (result.ok) {
-          setPasswordReset(true);
-        }
+        setPasswordReset(true);
       } catch (error) {
-        console.log('error');
         dispatch(setErrorForgot());
       }
 
@@ -80,19 +75,25 @@ export const ResetPassForm = ({ code }: IResetPassForm) => {
     }
   };
 
+  const repeatResetPass = () => {
+    dispatch(resetErrorForgot());
+  };
+
   return (
     <div>
       {isPasswordReset ? (
         <div className={styles.container}>
           <h4>Новые данные сохранены</h4>
           <p>Зайдите в личный кабинет, используя свои логин и новый пароль</p>
-          <Button type='button' text='Вход' />
+          <NavLink to='/auth'>
+            <Button type='button' text='Вход' />
+          </NavLink>
         </div>
       ) : forgot.error ? (
         <div className={styles.container}>
           <h4>Данные не сохранились</h4>
           <p>Что-то пошло не так. Попробуйте ещё раз</p>
-          <Button type='button' text='повторить' />
+          <Button type='button' text='повторить' handler={repeatResetPass} />
         </div>
       ) : (
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
