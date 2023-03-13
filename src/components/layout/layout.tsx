@@ -1,6 +1,9 @@
+/* eslint-disable no-debugger */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 
+import { setToken } from '../../api';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useTypeSelector } from '../../hooks/use-type-selector';
 import { AuthPage } from '../../pages/auth/auth-page';
@@ -18,6 +21,7 @@ import {
   setCurrentBooks,
 } from '../../redux/slices/books-slice';
 import { resetErrorStatusCategories } from '../../redux/slices/categories-slice';
+import { checkJwtLocalStorage } from '../../utils';
 import { Error } from '../error/error';
 import { Footer } from '../footer/footer';
 import { Header } from '../header/header';
@@ -32,6 +36,7 @@ export const Layout = () => {
   const user = useTypeSelector((state) => state.userReducer);
   const registration = useTypeSelector((state) => state.registrationReducer);
   const forgot = useTypeSelector((state) => state.forgotReducer);
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
@@ -42,12 +47,28 @@ export const Layout = () => {
   };
 
   useEffect(() => {
-    dispatch(getBooksThunk()).then(() => {
-      dispatch(filterCategories());
-      dispatch(setCurrentBooks('all'));
-      dispatch(filterByDescBooks());
-    });
-  }, [dispatch]);
+    const isJwt = checkJwtLocalStorage();
+
+    if (isJwt) {
+      navigate('/books/all');
+    } else {
+      navigate('/auth');
+    }
+  }, []);
+
+  //   useEffect(() => {
+  //     const isJwt = checkJwtLocalStorage();
+
+  //     if (isJwt) {
+  //       debugger;
+  //       setToken();
+  //       dispatch(getBooksThunk()).then(() => {
+  //         dispatch(filterCategories());
+  //         dispatch(setCurrentBooks('all'));
+  //         dispatch(filterByDescBooks());
+  //       });
+  //     }
+  //   }, [dispatch]);
 
   return (
     <React.Fragment>
@@ -61,7 +82,7 @@ export const Layout = () => {
         <Header />
         <div className={styles.container_content}>
           <Routes>
-            <Route path='/' element={<Navigate to='forgot-pass' />} />
+            <Route path='/' />
             <Route path='/auth' element={<AuthPage />} />
             <Route path='/registration' element={<RegistrationPage />} />
             <Route path='/forgot-pass' element={<ForgotPage />} />

@@ -110,6 +110,7 @@ const booksSlice = createSlice({
             state.error = false;
         },
         filterCategories: (state) => {
+            state.categoriesCount = initialState.categoriesCount;
             state.books.forEach((elem1) => {
                 elem1.categories.forEach((elem2) => {
                     state.categoriesCount[elem2].push(elem1);

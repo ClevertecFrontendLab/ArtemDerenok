@@ -1,13 +1,23 @@
+/* eslint-disable no-debugger */
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 
+import { setToken } from '../../api';
 import { Card } from '../../components/card/card';
 import { FiltrationBar } from '../../components/filtration/filtration-bar';
 import { Menu } from '../../components/menu/menu';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useTypeSelector } from '../../hooks/use-type-selector';
-import { filterByDescBooks, filterByIncrBooks, searchBook, setCurrentBooks } from '../../redux/slices/books-slice';
+import {
+  filterByDescBooks,
+  filterByIncrBooks,
+  filterCategories,
+  getBooksThunk,
+  searchBook,
+  setCurrentBooks,
+} from '../../redux/slices/books-slice';
+import { checkJwtLocalStorage } from '../../utils';
 
 import styles from './main-page.module.scss';
 
@@ -29,6 +39,19 @@ export const MainPage = () => {
   };
 
   const handleTypeSort = () => setSortType(!sortType);
+
+  useEffect(() => {
+    const isJwt = checkJwtLocalStorage();
+
+    if (isJwt) {
+      setToken();
+      dispatch(getBooksThunk()).then(() => {
+        dispatch(filterCategories());
+        dispatch(setCurrentBooks('all'));
+        dispatch(filterByDescBooks());
+      });
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(setCurrentBooks(categories));

@@ -9,6 +9,7 @@ import { useTypeSelector } from '../../hooks/use-type-selector';
 import { getCategoriesThunk } from '../../redux/slices/categories-slice';
 
 import styles from './menu.module.scss';
+import { setToken } from '../../api';
 
 interface IMenu {
   showMobileMenu?: () => void;
@@ -41,6 +42,7 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
 
   useEffect(() => {
     if (categories.length === 0) {
+      setToken();
       dispatch(getCategoriesThunk());
     }
   }, [categories.length, dispatch]);
@@ -116,6 +118,21 @@ export const Menu = ({ showMobileMenu, isBurger }: IMenu) => {
           to='/contract'
         >
           {({ isActive }) => <span className={isActive ? styles.active : undefined}>Договор оферты</span>}
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          data-test-id={isBurger === false ? 'navigation-contract' : 'burger-contract'}
+          onClick={() => {
+            if (showMobileMenu) {
+              showMobileMenu();
+            }
+
+            localStorage.removeItem('jwt');
+          }}
+          to='/auth'
+        >
+          {({ isActive }) => <span className={isActive ? styles.active : undefined}>Выход</span>}
         </NavLink>
       </li>
     </ul>

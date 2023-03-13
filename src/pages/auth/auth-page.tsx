@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
-import { AxiosError } from 'axios';
+import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { getLogin } from '../../api/authorisation';
 import arrowImg from '../../assets/arrow-right.png';
@@ -15,7 +15,9 @@ import {
   setError,
   setError400,
   setLoadingStatus,
+  setUserData,
 } from '../../redux/slices/user-slice';
+import { setNewJwtLocalStorage } from '../../utils';
 
 import styles from './auth-page.module.scss';
 
@@ -27,15 +29,20 @@ export const AuthPage = () => {
   } = useForm();
   const dispatch = useAppDispatch();
   const user = useTypeSelector((state) => state.userReducer);
+  const navigate = useNavigate();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     let result;
 
     dispatch(setLoadingStatus());
     dispatch(resetError400());
     try {
+      localStorage.removeItem('jwt');
       result = await getLogin(data);
       console.log(result);
+      dispatch(setUserData(result));
+      setNewJwtLocalStorage(result.jwt);
+      navigate('/books/all');
     } catch (error: any) {
       if (error.response.status !== 400) {
         dispatch(setError());
